@@ -1,19 +1,19 @@
-#include "building_carts_reader.h"
+#include "BuildingCardsReader.h"
 
 
 
-building_carts_reader::building_carts_reader()
+BuildingCardsReader::BuildingCardsReader()
 {
 }
 
 
-building_carts_reader::~building_carts_reader()
+BuildingCardsReader::~BuildingCardsReader()
 {
 }
 
 
-std::vector<building_cart> building_carts_reader::read_file(std::string path) {
-	std::vector<building_cart> data;
+std::vector<BuildingCard> BuildingCardsReader::read_file(std::string path) {
+	std::vector<BuildingCard> data;
 
 	ifstream ip(path);
 	if (!ip.is_open()) cout << "ERROR: FIle Open" << endl;
@@ -39,7 +39,7 @@ std::vector<building_cart> building_carts_reader::read_file(std::string path) {
 
 
 
-		building_cart element{ line1, line2,line3 };
+		BuildingCard element{ line1, line2,line3 };
 
 
 		// make cart object 

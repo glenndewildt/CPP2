@@ -2,14 +2,14 @@
 #include <iostream>
 using namespace std;
 
-class building_cart
+class BuildingCard
 {
 public:
-	building_cart() :kind{ "" }, cost{ "" }, color {""} {};
-	building_cart(const string kind, const string cost,const string color) : kind{ kind }, cost{ cost }, color{color} {};
-	~building_cart() {};
+	BuildingCard() :kind{ "" }, cost{ "" }, color {""} {};
+	BuildingCard(const string kind, const string cost,const string color) : kind{ kind }, cost{ cost }, color{color} {};
+	~BuildingCard() {};
 
-/*	friend ostream& operator<<(ostream& strm, building_cart & cart) {
+/*	friend ostream& operator<<(ostream& strm, BuildingCard & cart) {
 		if (strm) {
 			strm << cart.kind;
 		}

@@ -20,7 +20,7 @@ using namespace std;
 #include "ClientCommand.h"
 #include "Player.h"
 #include "ClientInfo.h"
-#include "building_carts_reader.h"
+#include "BuildingCardsReader.h"
 
 namespace machiavelli {
     const int tcp_port {1080};
@@ -119,7 +119,7 @@ void handle_client(Socket client) // this function runs in a separate thread
 
 int main(int argc, const char * argv[])
 {
-	building_carts_reader reader;
+	BuildingCardsReader reader;
 	reader.read_file("bouwkaarten.csv");
 
     // start command consumer thread

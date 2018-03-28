@@ -3,15 +3,15 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
-#include "building_cart.h"
+#include "BuildingCard.h"
 
 
 using namespace std;
-class building_carts_reader
+class BuildingCardsReader
 {
 public:
-	building_carts_reader();
-	std::vector<building_cart> read_file(std::string);
-	virtual ~building_carts_reader();
+	BuildingCardsReader();
+	std::vector<BuildingCard> read_file(std::string);
+	virtual ~BuildingCardsReader();
 };
 

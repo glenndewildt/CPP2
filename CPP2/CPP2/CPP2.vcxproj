@@ -145,8 +145,8 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="building_cart.h" />
-    <ClInclude Include="building_carts_reader.h" />
+    <ClInclude Include="BuildingCard.h" />
+    <ClInclude Include="BuildingCardsReader.h" />
     <ClInclude Include="CircularBuffer.h" />
     <ClInclude Include="ClientCommand.h" />
     <ClInclude Include="ClientInfo.h" />
@@ -158,8 +158,8 @@
     <ClInclude Include="throw.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="building_cart.cpp" />
-    <ClCompile Include="building_carts_reader.cpp" />
+    <ClCompile Include="BuildingCard.cpp" />
+    <ClCompile Include="BuildingCardsReader.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Socket.cpp" />
