@@ -128,6 +128,8 @@ void handle_client(Socket client) // this function runs in a separate thread
 
 int main(int argc, const char * argv[])
 {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF); // leak dump enabled
+
 	BuildingCardsReader reader;
 	reader.read_file("bouwkaarten.csv");
 
@@ -138,6 +140,8 @@ int main(int argc, const char * argv[])
     // create a server socket
     ServerSocket server {machiavelli::tcp_port};
 
+	bool gameStarted = false;
+
     try {
         cerr << "server listening" << '\n';
         while (running) {
@@ -147,6 +151,14 @@ int main(int argc, const char * argv[])
                 all_threads.emplace_back(handle_client, move(client));
             });
             this_thread::sleep_for(chrono::milliseconds(100));
+
+			if (gameController.clients.size() == 2 && !gameStarted) {
+				while (gameController.clients[0]->get_player().get_name() == "" || gameController.clients[1]->get_player().get_name() == "") {
+					// wacht tot namen bekend zijn
+				}
+				gameController.startGame();
+				gameStarted = true;
+			}
         }
     } catch (const exception& ex) {
         cerr << ex.what() << ", resuming..." << '\n';
