@@ -54,10 +54,22 @@
     <ClInclude Include="throw.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Stacks.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="BuildingCard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BuildingCardsReader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterCard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Globals.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -81,6 +93,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BuildingCardsReader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Stacks.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
