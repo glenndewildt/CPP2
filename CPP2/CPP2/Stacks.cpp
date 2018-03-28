@@ -17,3 +17,18 @@ Stacks::~Stacks()
 {
 }
 
+void Stacks::initBuildingCards()
+{
+}
+
+void Stacks::initCharacterCards()
+{
+}
+
+void Stacks::shuffleBuildingCards()
+{
+}
+
+void Stacks::shuffleCharacterCards()
+{
+}

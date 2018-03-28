@@ -13,11 +13,12 @@
 
 class Player {
 public:
-    Player() {}
-    Player(const std::string& name) : name {name} {}
+	Player(const int id, const std::string& name) : name{ name }, id{ id } {}
 
     std::string get_name() const { return name; }
     void set_name(const std::string& new_name) { name = new_name; }
+
+	const int id;
 
 private:
     std::string name;

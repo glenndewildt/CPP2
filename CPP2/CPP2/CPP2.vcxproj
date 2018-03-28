@@ -164,6 +164,7 @@
   <ItemGroup>
     <ClCompile Include="BuildingCard.cpp" />
     <ClCompile Include="BuildingCardsReader.cpp" />
+    <ClCompile Include="GameController.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Socket.cpp" />

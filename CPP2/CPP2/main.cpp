@@ -21,6 +21,7 @@ using namespace std;
 #include "Player.h"
 #include "ClientInfo.h"
 #include "BuildingCardsReader.h"
+#include "GameController.h"
 
 namespace machiavelli {
     const int tcp_port {1080};
@@ -31,6 +32,9 @@ static bool running = true;
 
 static Sync_queue<ClientCommand> queue;
 
+static GameController gameController;
+static int numberOfPlayers = 0;
+
 void consume_command() // runs in its own thread
 {
     try {
@@ -40,8 +44,12 @@ void consume_command() // runs in its own thread
                 auto &client = clientInfo->get_socket();
                 auto &player = clientInfo->get_player();
                 try {
-                    // TODO handle command here
-                    client << player.get_name() << ", you wrote: '" << command.get_cmd() << "', but I'll ignore that for now.\r\n" << machiavelli::prompt;
+					if (numberOfPlayers > 1) {
+						gameController.handleClientInput(command);
+					}
+					else {
+						client << "Waiting for second player to connect please hold on...\r\n";
+					}
                 } catch (const exception& ex) {
                     cerr << "*** exception in consumer thread for player " << player.get_name() << ": " << ex.what() << '\n';
                     if (client.is_open()) {
@@ -61,17 +69,19 @@ void consume_command() // runs in its own thread
 }
 
 std::shared_ptr<ClientInfo> init_client_session(Socket client) {
-    client.write("Welcome to Server 1.0! To quit, type 'quit'.\r\n");
+    client.write("Welcome to Server 0.1 Alpha! To quit, type 'exit'.\r\n");
     client.write("What's your name?\r\n");
     client.write(machiavelli::prompt);
     string name;
+	numberOfPlayers++;
+	int id = numberOfPlayers;
     bool done { false };
     while(!done) {
         done = client.readline([&name](std::string input) {
             name = input;
         });
     }
-    return make_shared<ClientInfo>(move(client), Player { name });
+    return make_shared<ClientInfo>(move(client), Player { id, name });
 }
 
 void handle_client(Socket client) // this function runs in a separate thread
@@ -82,6 +92,8 @@ void handle_client(Socket client) // this function runs in a separate thread
         auto &player = client_info->get_player();
         socket << "Welcome, " << player.get_name() << ", have fun playing our game!\r\n" << machiavelli::prompt;
 
+		gameController.clients.push_back(client_info);
+
         while (running) { // game loop
             try {
                 // read first line of request
@@ -89,13 +101,10 @@ void handle_client(Socket client) // this function runs in a separate thread
                 if (socket.readline([&cmd](std::string input) { cmd=input; })) {
                     cerr << '[' << socket.get_dotted_ip() << " (" << socket.get_socket() << ") " << player.get_name() << "] " << cmd << "\r\n";
 
-                    if (cmd == "quit") {
-                        socket.write("Bye!\r\n");
-                        break; // out of game loop, will end this thread and close connection
-                    }
-                    else if (cmd == "quit_server") {
-                        running = false;
-                    }
+                    if (cmd == "exit") {
+						running = false;
+						gameController.running = false;
+					}
 
                     ClientCommand command {cmd, client_info};
                     queue.put(command);
