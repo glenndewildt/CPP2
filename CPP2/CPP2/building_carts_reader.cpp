@@ -17,21 +17,14 @@ std::vector<building_cart> building_carts_reader::read_file(std::string path) {
 
 	ifstream ip(path);
 	if (!ip.is_open()) cout << "ERROR: FIle Open" << endl;
-	int counter1 = 0;
 
 	//loops untill there are no lines in document
 	while (ip) {
 		char line[200];
 
-		if (counter1 == 24) {
-			int i = 1;
-		}
+		ip.getline(line, 200, '\n');
 
-		ip.getline(line, 200, '\r');
-
-		if (line[0] == '\000') {
-			break;
-		}
+	
 
 		stringstream sentence{ line };
 
@@ -46,9 +39,8 @@ std::vector<building_cart> building_carts_reader::read_file(std::string path) {
 
 
 
-		building_cart element{ line1, line2,line1 };
+		building_cart element{ line1, line2,line3 };
 
-		counter1++;
 
 		// make cart object 
 		if (!element.is_empty())

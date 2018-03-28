@@ -86,10 +86,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\..\Downloads\machiavelli\Makefile" />
-    <None Include="..\..\..\..\..\Downloads\Bouwkaarten.csv">
+    <None Include="Bouwkaarten.csv">
       <Filter>Data</Filter>
     </None>
-    <None Include="..\..\..\..\..\Downloads\karakterkaarten.csv">
+    <None Include="karakterkaarten.csv">
       <Filter>Data</Filter>
     </None>
   </ItemGroup>

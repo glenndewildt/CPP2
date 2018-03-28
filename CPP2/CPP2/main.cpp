@@ -120,6 +120,7 @@ void handle_client(Socket client) // this function runs in a separate thread
 int main(int argc, const char * argv[])
 {
 	building_carts_reader reader;
+	reader.read_file("bouwkaarten.csv");
 
     // start command consumer thread
     vector<thread> all_threads;
