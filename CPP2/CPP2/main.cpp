@@ -130,11 +130,7 @@ void handle_client(Socket client) // this function runs in a separate thread
 int main(int argc, const char * argv[])
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF); // leak dump enabled
-	// csv readers
-	BuildingCardsReader reader;
-	reader.read_file("bouwkaarten.csv");
-	CharacterCardReader reader1;
-	reader1.read_file("karakterkaarten.csv");
+	gameController.init();
 
     // start command consumer thread
     vector<thread> all_threads;

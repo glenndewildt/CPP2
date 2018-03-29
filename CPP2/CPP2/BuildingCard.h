@@ -17,6 +17,12 @@ public:
 		return strm;
 	}
 */
+	BuildingCard& operator=(const BuildingCard& other) {
+		kind = other.kind;
+		cost = other.cost;
+		color = other.color;
+		return *this;
+	}
 	const bool is_empty() const {
 		
 		return kind.empty() && cost.empty()&&color.empty();
@@ -28,9 +34,9 @@ public:
 	const string get_color() const { return color; }
 
 private:
-	const string kind;
-	const string cost;
-	const string color;
+	 string kind;
+	 string cost;
+	 string color;
 
 
 };

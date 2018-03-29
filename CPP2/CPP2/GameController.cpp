@@ -46,6 +46,7 @@ void GameController::handleClientInput(const ClientCommand command)
 	if (player.id == currentTurnPlayerId) {
 		playerCommand.first = command.get_cmd();
 		playerCommand.second = player.id;
+
 	}
 	else
 	{
