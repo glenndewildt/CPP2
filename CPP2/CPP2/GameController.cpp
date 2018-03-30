@@ -27,6 +27,8 @@ void GameController::init() {
 
 void GameController::startGame()
 {
+	init();
+
 }
 
 void GameController::continueGame()
