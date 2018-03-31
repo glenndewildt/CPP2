@@ -47,12 +47,22 @@ void GameController::startGame()
 void GameController::continueGame()
 {
 	round++;
+	int count;
+
 	switch (gameStage) {
 	case PREPARATION:
 		execPrep();
 		gameStage = PICKING_CHARACTERS;
 		break;
 	case PICKING_CHARACTERS:
+		sendMessageToClients("\r\nStarting the next round picking chars\r\n", -1);
+
+		count = 1;
+		while (count <= 4) {
+			execPickChar(count);
+			count++;
+		}
+		
 		gameStage = CALLING_CHARACTERS;
 		break;
 	case CALLING_CHARACTERS:
@@ -72,11 +82,34 @@ void GameController::execPrep()
 
 		for (int i = 0; i < 4; i++)
 		{
-			// auto bc = stacks.getBuildingCard();
-			// assign bc to player
+			player.addBuildingCard(stacks.getBuildingCard());
 		}
 
 		socket.write("\r\nYou have been given 2 pieces of gold and 4 building cards\r\n");
+	}
+}
+
+void GameController::execPickChar(int turnCount)
+{
+	std::vector<std::shared_ptr<ClientInfo>>::iterator it;
+
+	for (it = clients.begin(); it != clients.end(); it++)
+	{
+		auto &socket = it->get()->get_socket();
+		auto &player = it->get()->get_player();
+
+		if (turnCount == 1) {
+			if (player.isKing()) {
+				socket.write("You're the king, so you may pick first\r\n");
+				socket.write("This card will now be removed: \r\n");
+				socket.write(stacks.removeCharacterCard(0) + "\r\n");
+				socket.write("Those cards are left to pick:\r\n");
+				socket.write(stacks.getCharacterCardOptions());
+			}
+			else {
+				// TODO: This scenario may not happen. come up with a catch
+			}
+		}
 	}
 }
 

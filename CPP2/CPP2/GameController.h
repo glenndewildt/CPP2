@@ -33,7 +33,7 @@ private:
 	void switchTurn() { currentTurnPlayerId = ( currentTurnPlayerId == 1 ? 2 : 1); };
 
 	void execPrep();
-	void execPickChar();
+	void execPickChar(int count);
 	void execCallChar();
 	void execPlayerTurn();
 	void cleanRound();
