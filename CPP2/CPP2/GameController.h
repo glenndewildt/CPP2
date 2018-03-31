@@ -30,6 +30,12 @@ private:
 	enum GameStage { PREPARATION, PICKING_CHARACTERS, CALLING_CHARACTERS, ENDING};
 	GameStage gameStage{ PREPARATION };
 
+	void execPrep();
+	void execPickChar();
+	void execCallChar();
+	void execPlayerTurn();
+	void cleanRound();
+
 	void sendMessageToClients(const std::string message, const int playerId);
 
 	std::pair<std::string, int> playerCommand;

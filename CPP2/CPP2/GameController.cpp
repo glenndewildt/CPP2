@@ -72,8 +72,8 @@ void GameController::execPrep()
 
 		for (int i = 0; i < 4; i++)
 		{
-			auto bc = stacks.getBuildingCard();
-			// Give the player building cards
+			// auto bc = stacks.getBuildingCard();
+			// assign bc to player
 		}
 
 		socket.write("\r\nYou have been given 2 pieces of gold and 4 building cards\r\n");
