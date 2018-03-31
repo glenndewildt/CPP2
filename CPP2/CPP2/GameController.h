@@ -27,8 +27,13 @@ public:
 
 	bool running{ true };
 private:
+	enum GameStage { PREPARATION, PICKING_CHARACTERS, CALLING_CHARACTERS, ENDING};
+	GameStage gameStage{ PREPARATION };
+
+	void sendMessageToClients(const std::string message, const int playerId);
 
 	std::pair<std::string, int> playerCommand;
+
 	Stacks stacks;
 	int currentTurnPlayerId{ 1 };
 	int round{ 0 };
