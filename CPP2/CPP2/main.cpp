@@ -18,6 +18,7 @@ using namespace std;
 #include "Socket.h"
 #include "Sync_queue.h"
 #include "ClientCommand.h"
+#include "CharacterCardReader.h"
 #include "Player.h"
 #include "ClientInfo.h"
 #include "BuildingCardsReader.h"
@@ -129,9 +130,6 @@ void handle_client(Socket client) // this function runs in a separate thread
 int main(int argc, const char * argv[])
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF); // leak dump enabled
-
-	BuildingCardsReader reader;
-	reader.read_file("bouwkaarten.csv");
 
     // start command consumer thread
     vector<thread> all_threads;
