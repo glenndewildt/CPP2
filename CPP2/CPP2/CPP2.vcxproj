@@ -148,6 +148,7 @@
     <ClInclude Include="BuildingCard.h" />
     <ClInclude Include="BuildingCardsReader.h" />
     <ClInclude Include="CharacterCard.h" />
+    <ClInclude Include="CharacterCardReader.h" />
     <ClInclude Include="CircularBuffer.h" />
     <ClInclude Include="ClientCommand.h" />
     <ClInclude Include="ClientInfo.h" />
@@ -164,6 +165,7 @@
   <ItemGroup>
     <ClCompile Include="BuildingCard.cpp" />
     <ClCompile Include="BuildingCardsReader.cpp" />
+    <ClCompile Include="CharacterCardReader.cpp" />
     <ClCompile Include="GameController.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />

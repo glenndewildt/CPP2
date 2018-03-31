@@ -17,6 +17,11 @@ public:
 	return strm;
 	}
 	*/
+	CharacterCard& operator=(const CharacterCard& other) {
+		number = other.number;
+		kind = other.kind;
+		return *this;
+	}
 	const bool is_empty() const {
 
 		return number.empty() && kind.empty();
@@ -27,8 +32,8 @@ public:
 	const string get_cost() const { return kind; }
 
 private:
-	const string number;
-	const string kind;
+	 string number;
+	 string kind;
 
 
 };
