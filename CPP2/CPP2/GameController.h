@@ -30,6 +30,8 @@ private:
 	enum GameStage { PREPARATION, PICKING_CHARACTERS, CALLING_CHARACTERS, ENDING};
 	GameStage gameStage{ PREPARATION };
 
+	void switchTurn() { currentTurnPlayerId = ( currentTurnPlayerId == 1 ? 2 : 1); };
+
 	void execPrep();
 	void execPickChar();
 	void execCallChar();
