@@ -40,8 +40,8 @@ void GameController::startGame()
 		{
 			auto &socket = client->get_socket();
 			auto &player = client->get_player();
-			socket.write("\r\n Gold:" + player.get_name + "\r\n");
-			socket.write("\r\n Gold:"+player.get_gold+"\r\n");
+			//socket.write("\r\n Gold:" + player.get_name + "\r\n");
+			//socket.write("\r\n Gold:"+player.get_gold+"\r\n");
 		}
 		
 
