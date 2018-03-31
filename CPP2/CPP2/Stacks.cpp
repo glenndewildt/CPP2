@@ -48,3 +48,12 @@ void Stacks::shuffleCharacterCards()
 {
 	std::random_shuffle(characterCards.begin(), characterCards.end());
 }
+const BuildingCard Stacks::getBuildingCard() {
+	BuildingCard first;
+	if (buildingCards.size() > 0) {
+		 first = buildingCards.front();
+		buildingCards.pop_front();
+	}
+	
+	return first;
+}

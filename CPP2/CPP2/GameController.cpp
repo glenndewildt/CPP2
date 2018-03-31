@@ -35,6 +35,16 @@ void GameController::startGame()
 	//});
 
 	while (running) {
+
+		for each (const std::shared_ptr<ClientInfo> client in clients)
+		{
+			auto &socket = client->get_socket();
+			auto &player = client->get_player();
+			socket.write("\r\n Gold:" + player.get_name + "\r\n");
+			socket.write("\r\n Gold:"+player.get_gold+"\r\n");
+		}
+		
+
 		if (clients.size() >= 2) {
 			//if (clients[0]->get_player().BuildingCount >= BuildingLimit || Client[1] does eat sleep rave repeat) {
 			//	gameStage = ending state;
@@ -65,16 +75,19 @@ void GameController::continueGame()
 
 void GameController::execPrep()
 {
+	init();
 	for each (const std::shared_ptr<ClientInfo> client in clients)
 	{
 		auto &socket = client->get_socket();
 		auto &player = client->get_player();
 
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i <= 4; i++)
 		{
-			// auto bc = stacks.getBuildingCard();
+			 auto bc = stacks.getBuildingCard();
 			// assign bc to player
+			 player.addBuildingCard(bc);
 		}
+		player.set_gold(2);
 
 		socket.write("\r\nYou have been given 2 pieces of gold and 4 building cards\r\n");
 	}
