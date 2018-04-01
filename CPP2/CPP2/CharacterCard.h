@@ -5,35 +5,22 @@ using namespace std;
 class CharacterCard
 {
 public:
-	CharacterCard() :number{ "" }, kind{ "" } {};
-	CharacterCard(const string kind, const string cost) : number{ kind }, kind{ cost } {};
+
+	
+	CharacterCard(const int id, const std::string name);
 	~CharacterCard() {};
 
-	/*    friend ostream& operator<<(ostream& strm, BuildingCard & cart) {
-	if (strm) {
-	strm << cart.kind;
-	}
+	int getId();
+	std::string getName();
 
-	return strm;
-	}
-	*/
-	CharacterCard& operator=(const CharacterCard& other) {
-		number = other.number;
-		kind = other.kind;
-		return *this;
-	}
-	const bool is_empty() const {
+	void setId(int);
+	void setName(std::string);
 
-		return number.empty() && kind.empty();
-	}
-
-
-	const string get_kind() const { return kind; }
-	const string get_cost() const { return number; }
+	enum CharType { Moordenaar, Dief, Magier, Koning, Prediker, Koopman, Bouwmeester, Condottiere, None };
 
 private:
-	 string number;
-	 string kind;
+	int id;
+	std::string name;
 
-
+	CharType characterType;
 };
