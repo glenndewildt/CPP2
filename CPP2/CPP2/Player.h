@@ -34,14 +34,16 @@ public:
 	void addBuildingCard(const BuildingCard& newCard) { buildingCards.push_back(newCard); }
 	//void delBuildingCard(const BuildingCard& newCard) { building_carts.erase(newCard); }
 
-
+	bool isKing() const { return king; };
 	const int id;
 
 private:
-	int gold;
+	int gold { 2 };
+	bool king{ false };
 	std::string name;
 	std::vector<CharacterCard> charCards;
 	std::vector<BuildingCard> buildingCards;
+	std::vector<BuildingCard> buildedBuildings;
 };
 
 #endif /* Player_hpp */

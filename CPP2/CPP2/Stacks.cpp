@@ -48,12 +48,24 @@ void Stacks::shuffleCharacterCards()
 {
 	std::random_shuffle(characterCards.begin(), characterCards.end());
 }
+
 const BuildingCard Stacks::getBuildingCard() {
-	BuildingCard first;
-	if (buildingCards.size() > 0) {
-		 first = buildingCards.front();
-		buildingCards.pop_front();
+	if (buildingCards.size() == 0) {
+		buildingCards = discardedBuildings;
+		discardedBuildings.clear();
 	}
-	
-	return first;
+
+	const BuildingCard rv = buildingCards.front();
+	buildingCards.pop_front();
+	return rv;
+}
+
+const std::string Stacks::removeCharacterCard(const int optionID)
+{
+	return "TODO";
+}
+
+const std::string Stacks::getCharacterCardOptions()
+{
+	return "TODO";
 }
