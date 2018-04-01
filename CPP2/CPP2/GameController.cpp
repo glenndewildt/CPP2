@@ -80,6 +80,7 @@ void GameController::continueGame()
 		gameStage = CALLING_CHARACTERS;
 		break;
 	case CALLING_CHARACTERS:
+	
 		execPlayerTurn();
 		gameStage = PICKING_CHARACTERS;
 		break;
@@ -119,6 +120,80 @@ void GameController::execPlayerTurn() {
 				socket.write("\r\n 1: grab 2 pieces of gold");
 				socket.write("\r\n 2: grab 2 building cards and keep one");
 				socket.write("\r\n 3: grab 2 use character power");
+				int answer = recieveAnswerFromPlayer(stacks.getAmountOfCharacterCards());
+				switchTurn();
+
+			}
+		}
+
+		for (CharacterCard& card : player.getCharCards()) {
+			if (card.get_kind() == "Dief") {
+				socket.write(" 1: Dief:");
+				socket.write("\r\n 1: grab 2 pieces of gold");
+				socket.write("\r\n 2: grab 2 building cards and keep one");
+				socket.write("\r\n 3: grab 2 use character power");
+				int answer = recieveAnswerFromPlayer(stacks.getAmountOfCharacterCards());
+
+			}
+		}
+		for (CharacterCard& card : player.getCharCards()) {
+			if (card.get_kind() == "Magier") {
+				socket.write(" 1: Magier:");
+				socket.write("\r\n 1: grab 2 pieces of gold");
+				socket.write("\r\n 2: grab 2 building cards and keep one");
+				socket.write("\r\n 3: grab 2 use character power");
+				int answer = recieveAnswerFromPlayer(stacks.getAmountOfCharacterCards());
+
+			}
+		}
+		for (CharacterCard& card : player.getCharCards()) {
+			if (card.get_kind() == "Koning") {
+				socket.write(" 1: Koning:");
+				socket.write("\r\n 1: grab 2 pieces of gold");
+				socket.write("\r\n 2: grab 2 building cards and keep one");
+				socket.write("\r\n 3: grab 2 use character power");
+				int answer = recieveAnswerFromPlayer(stacks.getAmountOfCharacterCards());
+
+			}
+		}
+		for (CharacterCard& card : player.getCharCards()) {
+			if (card.get_kind() == "Prediker") {
+				socket.write(" 1: Prediker:");
+				socket.write("\r\n 1: grab 2 pieces of gold");
+				socket.write("\r\n 2: grab 2 building cards and keep one");
+				socket.write("\r\n 3: grab 2 use character power");
+				int answer = recieveAnswerFromPlayer(stacks.getAmountOfCharacterCards());
+
+			}
+		}
+		for (CharacterCard& card : player.getCharCards()) {
+			if (card.get_kind() == "Koopman") {
+				socket.write(" 1: Koopman:");
+				socket.write("\r\n 1: grab 2 pieces of gold");
+				socket.write("\r\n 2: grab 2 building cards and keep one");
+				socket.write("\r\n 3: grab 2 use character power");
+				int answer = recieveAnswerFromPlayer(stacks.getAmountOfCharacterCards());
+
+			}
+		}
+		for (CharacterCard& card : player.getCharCards()) {
+			if (card.get_kind() == "Bouwmeester") {
+				socket.write(" 1: Bouwmeester:");
+				socket.write("\r\n 1: grab 2 pieces of gold");
+				socket.write("\r\n 2: grab 2 building cards and keep one");
+				socket.write("\r\n 3: grab 2 use character power");
+				int answer = recieveAnswerFromPlayer(stacks.getAmountOfCharacterCards());
+
+			}
+		}
+		for (CharacterCard& card : player.getCharCards()) {
+			if (card.get_kind() == "Condottiere") {
+				socket.write(" 1: Condottiere:");
+				socket.write("\r\n 1: grab 2 pieces of gold");
+				socket.write("\r\n 2: grab 2 building cards and keep one");
+				socket.write("\r\n 3: grab 2 use character power");
+				int answer = recieveAnswerFromPlayer(stacks.getAmountOfCharacterCards());
+
 			}
 		}
 
