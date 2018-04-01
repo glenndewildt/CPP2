@@ -23,7 +23,8 @@ std::vector<CharacterCard> CharacterCardReader::read_file(std::string path) {
 
 		ip.getline(line, 200, '\n');
 
-
+		if (line == "" || line[0] == '\0')
+			continue;
 
 		stringstream sentence{ line };
 
@@ -34,13 +35,11 @@ std::vector<CharacterCard> CharacterCardReader::read_file(std::string path) {
 		sentence.getline(line1, 100, ';');
 		sentence.getline(line2, 100, ';');
 
-
-
-		CharacterCard element{ line1, line2 };
+		CharacterCard element{ stol(line1), line2 };
 
 
 		// make cart object 
-		if (!element.is_empty())
+		//if (!element.is_empty())
 			data.push_back(element);
 	}
 

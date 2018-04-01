@@ -107,6 +107,9 @@
     <ClCompile Include="CharacterCardReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CharacterCard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\..\Downloads\machiavelli\Makefile" />

@@ -166,6 +166,7 @@
     <ClCompile Include="BuildingCard.cpp" />
     <ClCompile Include="BuildingCardsReader.cpp" />
     <ClCompile Include="CharacterCardReader.cpp" />
+    <ClCompile Include="CharacterCard.cpp" />
     <ClCompile Include="GameController.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />

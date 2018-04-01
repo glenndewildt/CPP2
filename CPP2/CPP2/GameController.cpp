@@ -67,6 +67,10 @@ void GameController::continueGame()
 		gameStage = CALLING_CHARACTERS;
 		break;
 	case CALLING_CHARACTERS:
+		sendMessageToClients("Characters are chosen, now we start calling them", 3);
+		
+		execCallChar();
+
 		gameStage = PICKING_CHARACTERS;
 		break;
 	case ENDING:
@@ -110,7 +114,7 @@ void GameController::execPickChar(int turnCount)
 				int answer = recieveAnswerFromPlayer(stacks.getAmountOfCharacterCards());
 				
 				player.addCharCard(stacks.getCharacterCard(answer));
-				socket.write("You took " + player.getCharCards().back().get_kind() + " as your card\r\n");
+				socket.write("You took " + player.getCharCards().back().getName() + " as your card\r\n");
 
 				switchTurn();
 				return;
@@ -134,12 +138,56 @@ void GameController::execPickChar(int turnCount)
 			const int secAnswer = recieveAnswerFromPlayer(stacks.getAmountOfCharacterCards());
 
 			player.addCharCard(stacks.getCharacterCard(secAnswer));
-			socket.write("You took " + player.getCharCards().back().get_kind() + "\r\n");
+			socket.write("You took " + player.getCharCards().back().getName() + "\r\n");
 
 			switchTurn();
 			return;
 		}
 	}
+}
+
+void GameController::execCallChar() {
+	int callCount = 1;
+	while (callCount <= 8)
+	{
+		for each (const std::shared_ptr<ClientInfo> client in clients)
+		{
+			auto &player = client->get_player();
+
+			std::vector<CharacterCard>::iterator it;
+
+			for (it = player.getCharCards().begin(); it != player.getCharCards().end(); it++)
+			{
+				
+			}
+
+		}
+
+		callCount++;
+	}
+
+	sendMessageToClients("The chars have been called, end of the round\r\n", 3);
+	cleanRound();
+}
+
+void GameController::cleanRound() {
+	std::vector<std::shared_ptr<ClientInfo>>::iterator clientIt;
+
+	for (clientIt = clients.begin(); clientIt != clients.end(); clientIt++)
+	{
+		auto &player = clientIt->get()->get_player();
+
+		std::vector<CharacterCard>::iterator charIt;
+		for (charIt = player.getCharCards().begin(); charIt != player.getCharCards().end(); charIt++)
+		{
+			stacks.addCharacterCard(*charIt);
+		}
+
+		player.getCharCards().clear();
+	}
+
+	stacks.undiscardCharacterCards();
+	stacks.shuffleCharacterCards();
 }
 
 const int GameController::recieveAnswerFromPlayer(const int optionCount) {
