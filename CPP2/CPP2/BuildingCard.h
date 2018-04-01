@@ -9,14 +9,14 @@ public:
 	BuildingCard(const string kind, const string cost,const string color) : kind{ kind }, cost{ cost }, color{color} {};
 	~BuildingCard() {};
 
-/*	friend ostream& operator<<(ostream& strm, BuildingCard & cart) {
+	friend ostream& operator<<(ostream& strm, BuildingCard & cart) {
 		if (strm) {
-			strm << cart.kind;
+			strm << cart.kind.c_str();
 		}
 
 		return strm;
 	}
-*/
+
 	BuildingCard& operator=(const BuildingCard& other) {
 		kind = other.kind;
 		cost = other.cost;

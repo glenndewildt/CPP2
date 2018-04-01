@@ -31,7 +31,6 @@ std::vector<CharacterCard> CharacterCardReader::read_file(std::string path) {
 		char line1[100];
 		char line2[100];
 
-
 		sentence.getline(line1, 100, ';');
 		sentence.getline(line2, 100, ';');
 
