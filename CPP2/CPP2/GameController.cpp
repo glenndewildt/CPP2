@@ -70,7 +70,7 @@ void GameController::continueGame()
 		break;
 	case PICKING_CHARACTERS:
 		sendMessageToClients("\r\nStarting the next round picking chars\r\n", -1);
-
+			
 		count = 1;
 		while (stacks.getCharacterCardOptions().size() > 0) {
 			execPickChar(count);
