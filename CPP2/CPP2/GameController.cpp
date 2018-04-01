@@ -80,15 +80,8 @@ void GameController::continueGame()
 		gameStage = CALLING_CHARACTERS;
 		break;
 	case CALLING_CHARACTERS:
-<<<<<<< HEAD
 		sendMessageToClients("Characters are chosen, now we start calling them", 3);
-		
 		execCallChar();
-
-=======
-	
-		execPlayerTurn();
->>>>>>> 8471b45f34dae12e7f0c6a7db7d482dca4439a2c
 		gameStage = PICKING_CHARACTERS;
 		break;
 	case ENDING:
@@ -122,7 +115,7 @@ void GameController::execPlayerTurn() {
 		auto &socket = client->get_socket();
 		auto &player = client->get_player();
 		for (CharacterCard& card: player.getCharCards()) {
-			if (card.get_kind() == "Moordenaar") {
+			if (card.getName() == "Moordenaar") {
 				socket.write(" 1: Moordenaar:");
 				socket.write("\r\n 1: grab 2 pieces of gold");
 				socket.write("\r\n 2: grab 2 building cards and keep one");
@@ -134,7 +127,7 @@ void GameController::execPlayerTurn() {
 		}
 
 		for (CharacterCard& card : player.getCharCards()) {
-			if (card.get_kind() == "Dief") {
+			if (card.getName() == "Dief") {
 				socket.write(" 1: Dief:");
 				socket.write("\r\n 1: grab 2 pieces of gold");
 				socket.write("\r\n 2: grab 2 building cards and keep one");
@@ -144,7 +137,7 @@ void GameController::execPlayerTurn() {
 			}
 		}
 		for (CharacterCard& card : player.getCharCards()) {
-			if (card.get_kind() == "Magier") {
+			if (card.getName() == "Magier") {
 				socket.write(" 1: Magier:");
 				socket.write("\r\n 1: grab 2 pieces of gold");
 				socket.write("\r\n 2: grab 2 building cards and keep one");
@@ -154,7 +147,7 @@ void GameController::execPlayerTurn() {
 			}
 		}
 		for (CharacterCard& card : player.getCharCards()) {
-			if (card.get_kind() == "Koning") {
+			if (card.getName() == "Koning") {
 				socket.write(" 1: Koning:");
 				socket.write("\r\n 1: grab 2 pieces of gold");
 				socket.write("\r\n 2: grab 2 building cards and keep one");
@@ -164,7 +157,7 @@ void GameController::execPlayerTurn() {
 			}
 		}
 		for (CharacterCard& card : player.getCharCards()) {
-			if (card.get_kind() == "Prediker") {
+			if (card.getName() == "Prediker") {
 				socket.write(" 1: Prediker:");
 				socket.write("\r\n 1: grab 2 pieces of gold");
 				socket.write("\r\n 2: grab 2 building cards and keep one");
@@ -174,7 +167,7 @@ void GameController::execPlayerTurn() {
 			}
 		}
 		for (CharacterCard& card : player.getCharCards()) {
-			if (card.get_kind() == "Koopman") {
+			if (card.getName() == "Koopman") {
 				socket.write(" 1: Koopman:");
 				socket.write("\r\n 1: grab 2 pieces of gold");
 				socket.write("\r\n 2: grab 2 building cards and keep one");
@@ -184,7 +177,7 @@ void GameController::execPlayerTurn() {
 			}
 		}
 		for (CharacterCard& card : player.getCharCards()) {
-			if (card.get_kind() == "Bouwmeester") {
+			if (card.getName() == "Bouwmeester") {
 				socket.write(" 1: Bouwmeester:");
 				socket.write("\r\n 1: grab 2 pieces of gold");
 				socket.write("\r\n 2: grab 2 building cards and keep one");
@@ -194,7 +187,7 @@ void GameController::execPlayerTurn() {
 			}
 		}
 		for (CharacterCard& card : player.getCharCards()) {
-			if (card.get_kind() == "Condottiere") {
+			if (card.getName() == "Condottiere") {
 				socket.write(" 1: Condottiere:");
 				socket.write("\r\n 1: grab 2 pieces of gold");
 				socket.write("\r\n 2: grab 2 building cards and keep one");
@@ -252,12 +245,7 @@ void GameController::execPickChar(int turnCount)
 			const int secAnswer = recieveAnswerFromPlayer(stacks.getAmountOfCharacterCards());
 
 			player.addCharCard(stacks.getCharacterCard(secAnswer));
-<<<<<<< HEAD
 			socket.write("You took " + player.getCharCards().back().getName() + "\r\n");
-
-=======
-			socket.write("You took " + player.getCharCards().back().get_kind() + "\r\n");
->>>>>>> 8471b45f34dae12e7f0c6a7db7d482dca4439a2c
 			switchTurn();
 
 		
