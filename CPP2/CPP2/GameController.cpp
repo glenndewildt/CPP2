@@ -72,7 +72,7 @@ void GameController::continueGame()
 		sendMessageToClients("\r\nStarting the next round picking chars\r\n", -1);
 
 		count = 1;
-		while (count <= 4) {
+		while (stacks.getCharacterCardOptions().size() > 0) {
 			execPickChar(count);
 			count++;
 		}
@@ -80,6 +80,7 @@ void GameController::continueGame()
 		gameStage = CALLING_CHARACTERS;
 		break;
 	case CALLING_CHARACTERS:
+		execPlayerTurn();
 		gameStage = PICKING_CHARACTERS;
 		break;
 	case ENDING:
@@ -104,6 +105,24 @@ void GameController::execPrep()
 		player.set_gold(2);
 
 		socket.write("\r\nYou have been given 2 pieces of gold and 4 building cards\r\n");
+	}
+}
+
+void GameController::execPlayerTurn() {
+	for each (const std::shared_ptr<ClientInfo> client in clients)
+	{
+		auto &socket = client->get_socket();
+		auto &player = client->get_player();
+		for (CharacterCard& card: player.getCharCards()) {
+			if (card.get_kind() == "Moordenaar") {
+				socket.write(" 1: Moordenaar:");
+				socket.write("\r\n 1: grab 2 pieces of gold");
+				socket.write("\r\n 2: grab 2 building cards and keep one");
+				socket.write("\r\n 3: grab 2 use character power");
+			}
+		}
+
+
 	}
 }
 
@@ -152,8 +171,9 @@ void GameController::execPickChar(int turnCount)
 
 			player.addCharCard(stacks.getCharacterCard(secAnswer));
 			socket.write("You took " + player.getCharCards().back().get_kind() + "\r\n");
-
 			switchTurn();
+
+		
 			return;
 		}
 	}
