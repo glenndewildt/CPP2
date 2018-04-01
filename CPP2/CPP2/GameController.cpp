@@ -91,7 +91,6 @@ void GameController::continueGame()
 
 void GameController::execPrep()
 {
-	init();
 	for each (const std::shared_ptr<ClientInfo> client in clients)
 	{
 		auto &socket = client->get_socket();
