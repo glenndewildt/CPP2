@@ -28,8 +28,8 @@ public:
 	}
 
 
-	const string get_kind() const { return number; }
-	const string get_cost() const { return kind; }
+	const string get_kind() const { return kind; }
+	const string get_cost() const { return number; }
 
 private:
 	 string number;
