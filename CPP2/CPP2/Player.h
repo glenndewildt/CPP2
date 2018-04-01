@@ -34,6 +34,8 @@ public:
 	void addBuildingCard(const BuildingCard& newCard) { buildingCards.push_back(newCard); }
 	//void delBuildingCard(const BuildingCard& newCard) { building_carts.erase(newCard); }
 
+	void setKing() { king = true; };
+	void unsetKing() { king = false; };
 	bool isKing() const { return king; };
 	const int id;
 

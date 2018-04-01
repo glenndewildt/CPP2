@@ -60,12 +60,36 @@ const BuildingCard Stacks::getBuildingCard() {
 	return rv;
 }
 
+const int Stacks::getAmountOfCharacterCards() {
+	return characterCards.size();
+}
+
+const CharacterCard Stacks::getCharacterCard(const int optionID)
+{
+	CharacterCard rv = characterCards[optionID - 1];
+	characterCards.erase(characterCards.begin() + optionID - 1);
+	return rv;
+}
+
 const std::string Stacks::removeCharacterCard(const int optionID)
 {
-	return "TODO";
+	discardedCharacters.push_back(characterCards[optionID - 1]);
+	characterCards.erase(characterCards.begin() + optionID - 1);
+
+	return discardedCharacters.back().get_kind();
 }
 
 const std::string Stacks::getCharacterCardOptions()
 {
-	return "TODO";
+	std::string options{ "" };
+
+	deque<CharacterCard>::iterator it;
+
+	for (it = characterCards.begin(); it != characterCards.end(); it++)
+	{
+		options.append(std::to_string(it - characterCards.begin() + 1) + ": ");
+		options.append(it->get_kind() + "\r\n");
+	}
+
+	return options;
 }

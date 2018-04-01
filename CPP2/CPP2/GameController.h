@@ -9,6 +9,8 @@
 #include "BuildingCard.h"
 #include "CharacterCard.h"
 
+#include "Globals.h"
+
 class GameController
 {
 public:
@@ -39,11 +41,15 @@ private:
 	void cleanRound();
 
 	void sendMessageToClients(const std::string message, const int playerId);
-
+	const int recieveAnswerFromPlayer(const int amountOfOptions);
 	std::pair<std::string, int> playerCommand;
 
 	Stacks stacks;
 	int currentTurnPlayerId{ 1 };
 	int round{ 0 };
 	int firstWinPlayerId{ 0 };
+
+
+	// STATICS
+	const int BuildingLimitToEndGame { 8 };
 };
