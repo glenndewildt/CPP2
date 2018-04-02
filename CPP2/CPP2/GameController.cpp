@@ -338,7 +338,32 @@ void GameController::getGoldOrBuilding(Player& player)
 
 void GameController::showPlayerStats(Player& player)
 {
+	sendMessageToClients("Player Info: \r\n\r\nGold: " + player.get_gold(), player.id);
+	sendMessageToClients("\r\nBuildingcards in possession: \r\n", player.id);
 
+	std::vector<BuildingCard>::iterator bpIt;
+
+	for (bpIt = player.getBuildingCards().begin(); bpIt != player.getBuildingCards().end(); bpIt++)
+	{
+		sendMessageToClients("Name: " + bpIt->get_kind() + "\tColor: " + bpIt->get_color() + "\tCost: " + bpIt->get_cost() + "\r\n", player.id);
+	}
+
+	sendMessageToClients("\r\nBuildings builded: \r\n", player.id);
+
+	std::vector<BuildingCard>::iterator bbIt;
+
+	for (bbIt = player.getBuildings().begin(); bbIt != player.getBuildings().end(); bbIt++)
+	{
+		sendMessageToClients("Name: " + bbIt->get_kind() + "\tColor: " + bbIt->get_color() + "\tCost: " + bbIt->get_cost() + "\r\n", player.id);
+	}
+
+	sendMessageToClients("Character Cards in possession", player.id);
+	std::vector<CharacterCard>::iterator ccIt;
+
+	for (ccIt = player.getCharCards().begin(); ccIt != player.getCharCards().end(); ccIt++)
+	{
+		sendMessageToClients("Name: " + ccIt->getName() + "\r\n\r\n", player.id);
+	}
 }
 
 void GameController::cleanRound() {
