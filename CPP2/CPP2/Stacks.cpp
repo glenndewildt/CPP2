@@ -67,6 +67,11 @@ const int Stacks::getAmountOfBuilingCards() {
 	return buildingCards.size();
 }
 
+void Stacks::discardBuildingCard(const BuildingCard buildingCard)
+{
+	discardedBuildings.push_back(buildingCard);
+}
+
 const CharacterCard Stacks::getCharacterCard(const int optionID)
 {
 	CharacterCard rv = characterCards[optionID - 1];

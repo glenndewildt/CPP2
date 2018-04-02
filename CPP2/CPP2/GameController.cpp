@@ -303,7 +303,37 @@ void GameController::useCard(Player& player, CharacterCard charCard)
 
 void GameController::getGoldOrBuilding(Player& player)
 {
+	sendMessageToClients("\r\nWhich do you want?\r\n1: Gold\r\n2: building\r\n", player.id);
 
+	int answer = recieveAnswerFromPlayer(2);
+
+	if (answer == 1)
+	{
+		player.add_gold(2);
+		sendMessageToClients("\r\n" + player.get_name() + " has chosen for 2 gold pieces\r\n", 3);
+	}
+	else if (answer == 2)
+	{
+		const BuildingCard fst = stacks.getBuildingCard();
+		const BuildingCard scd = stacks.getBuildingCard();
+
+		sendMessageToClients("\r\n1: " + fst.get_kind() + " Color: " + fst.get_color() + " cost: " + fst.get_cost() + "\r\n", player.id);
+		sendMessageToClients("\r\n2: " + scd.get_kind() + " Color: " + scd.get_color() + " cost: " + scd.get_cost() + "\r\n", player.id);
+	
+		int scndAnswer = recieveAnswerFromPlayer(2);
+
+		if (answer == 1) {
+			player.addBuildingCard(fst);
+			stacks.discardBuildingCard(scd);
+		}
+		else if (answer == 2)
+		{
+			player.addBuildingCard(scd);
+			stacks.discardBuildingCard(fst);
+		}
+		
+		sendMessageToClients("\r\nA building card was taken by " + player.get_name() + "\r\n", 3);
+	}
 }
 
 void GameController::showPlayerStats(Player& player)

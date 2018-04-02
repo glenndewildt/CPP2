@@ -22,7 +22,7 @@ public:
 	const int getAmountOfCharacterCards();
 	const int getAmountOfBuilingCards();
 
-	void discardBuildingCard(const BuildingCard b);
+	void discardBuildingCard(const BuildingCard card);
 
 	const CharacterCard getCharacterCard(const int optionId);
 
