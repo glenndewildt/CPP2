@@ -518,12 +518,21 @@ void GameController::executeMagier(Player & player)
 
 	switch (answer) {
 	case 1:
+		// make :: switch player cards
 		message = " switched with other player ";
 		break;
 	case 2:
 		for (CharacterCard& charCard : player.getCharCards()) {
 			sendMessageToClients("\r\1:"+ charCard.getName(), player.id);
+			// make :: delete cards
+			// make :: add card
 		}
+		for (BuildingCard& charCard : player.getBuildingCards()) {
+			sendMessageToClients("\r\1:" + charCard.get_kind(), player.id);
+			// make :: delete cards
+			// make :: add card
+		}
+
 		message = "  ";
 	}
 }
@@ -545,7 +554,6 @@ void GameController::executeKoopman(Player & player) {
 			player.add_gold(1);
 		}
 	}
-
 }
 void GameController::executeBouwmeester(Player & player)
 {
@@ -556,12 +564,19 @@ void GameController::executeBouwmeester(Player & player)
 		}
 		else {
 			sendMessageToClients("\r\ buildingcards are empty:", player.id);
-
 		}
+		counter++;
 	}
+	int counter2 = 0;
 	sendMessageToClients("\r\ buildingcards added", player.id);
-	for (auto& buildingCard: player.getBuildingCards()) {
+	while(counter2< 4) {
+		for (auto& buildingCard : player.getBuildingCards()) {
+			sendMessageToClients("\r\ build building:"+ buildingCard.get_kind(), player.id);
+		}
+		// make chose building card to build
+
 	}
+
 	
 }
 void GameController::executeCondottiere(Player & player)
