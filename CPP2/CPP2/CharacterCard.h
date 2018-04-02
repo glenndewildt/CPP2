@@ -9,18 +9,20 @@ public:
 	
 	CharacterCard(const int id, const std::string name);
 	~CharacterCard() {};
+	
+	enum CharType { Moordenaar, Dief, Magier, Koning, Prediker, Koopman, Bouwmeester, Condottiere, None };
 
-	int getId();
-	std::string getName();
+	int getId() const;
+	std::string getName() const;
+	CharType getType() const;
 
 	void setId(int);
 	void setName(std::string);
-
-	enum CharType { Moordenaar, Dief, Magier, Koning, Prediker, Koopman, Bouwmeester, Condottiere, None };
+	void setType(CharType);
 
 private:
 	int id;
 	std::string name;
 
-	CharType characterType;
+	CharType charType;
 };
