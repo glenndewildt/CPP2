@@ -72,6 +72,7 @@ void GameController::continueGame()
 		sendMessageToClients("\r\nStarting the next round picking chars\r\n", -1);
 			
 		count = 1;
+		std::cout << "stack size: "<< stacks.getCharacterCardOptions().size();
 		while (stacks.getCharacterCardOptions().size() > 0) {
 			execPickChar(count);
 			count++;
@@ -113,88 +114,7 @@ void GameController::execPlayerTurn() {
 	{
 		auto &socket = client->get_socket();
 		auto &player = client->get_player();
-		for (CharacterCard& card: player.getCharCards()) {
-			if (card.getName() == "Moordenaar") {
-				socket.write(" 1: Moordenaar:");
-				socket.write("\r\n 1: grab 2 pieces of gold");
-				socket.write("\r\n 2: grab 2 building cards and keep one");
-				socket.write("\r\n 3: grab 2 use character power");
-				int answer = recieveAnswerFromPlayer(stacks.getAmountOfCharacterCards());
-				switchTurn();
 
-			}
-		}
-
-		for (CharacterCard& card : player.getCharCards()) {
-			if (card.getName() == "Dief") {
-				socket.write(" 1: Dief:");
-				socket.write("\r\n 1: grab 2 pieces of gold");
-				socket.write("\r\n 2: grab 2 building cards and keep one");
-				socket.write("\r\n 3: grab 2 use character power");
-				int answer = recieveAnswerFromPlayer(stacks.getAmountOfCharacterCards());
-
-			}
-		}
-		for (CharacterCard& card : player.getCharCards()) {
-			if (card.getName() == "Magier") {
-				socket.write(" 1: Magier:");
-				socket.write("\r\n 1: grab 2 pieces of gold");
-				socket.write("\r\n 2: grab 2 building cards and keep one");
-				socket.write("\r\n 3: grab 2 use character power");
-				int answer = recieveAnswerFromPlayer(stacks.getAmountOfCharacterCards());
-
-			}
-		}
-		for (CharacterCard& card : player.getCharCards()) {
-			if (card.getName() == "Koning") {
-				socket.write(" 1: Koning:");
-				socket.write("\r\n 1: grab 2 pieces of gold");
-				socket.write("\r\n 2: grab 2 building cards and keep one");
-				socket.write("\r\n 3: grab 2 use character power");
-				int answer = recieveAnswerFromPlayer(stacks.getAmountOfCharacterCards());
-
-			}
-		}
-		for (CharacterCard& card : player.getCharCards()) {
-			if (card.getName() == "Prediker") {
-				socket.write(" 1: Prediker:");
-				socket.write("\r\n 1: grab 2 pieces of gold");
-				socket.write("\r\n 2: grab 2 building cards and keep one");
-				socket.write("\r\n 3: grab 2 use character power");
-				int answer = recieveAnswerFromPlayer(stacks.getAmountOfCharacterCards());
-
-			}
-		}
-		for (CharacterCard& card : player.getCharCards()) {
-			if (card.getName() == "Koopman") {
-				socket.write(" 1: Koopman:");
-				socket.write("\r\n 1: grab 2 pieces of gold");
-				socket.write("\r\n 2: grab 2 building cards and keep one");
-				socket.write("\r\n 3: grab 2 use character power");
-				int answer = recieveAnswerFromPlayer(stacks.getAmountOfCharacterCards());
-
-			}
-		}
-		for (CharacterCard& card : player.getCharCards()) {
-			if (card.getName() == "Bouwmeester") {
-				socket.write(" 1: Bouwmeester:");
-				socket.write("\r\n 1: grab 2 pieces of gold");
-				socket.write("\r\n 2: grab 2 building cards and keep one");
-				socket.write("\r\n 3: grab 2 use character power");
-				int answer = recieveAnswerFromPlayer(stacks.getAmountOfCharacterCards());
-
-			}
-		}
-		for (CharacterCard& card : player.getCharCards()) {
-			if (card.getName() == "Condottiere") {
-				socket.write(" 1: Condottiere:");
-				socket.write("\r\n 1: grab 2 pieces of gold");
-				socket.write("\r\n 2: grab 2 building cards and keep one");
-				socket.write("\r\n 3: grab 2 use character power");
-				int answer = recieveAnswerFromPlayer(stacks.getAmountOfCharacterCards());
-
-			}
-		}
 
 
 	}
@@ -260,21 +180,129 @@ void GameController::execCallChar() {
 		for each (const std::shared_ptr<ClientInfo> client in clients)
 		{
 			auto &player = client->get_player();
+			auto &socket = client->get_socket();
 
-			std::vector<CharacterCard>::iterator it;
 
-			for (it = player.getCharCards().begin(); it != player.getCharCards().end(); it++)
+
+			for (auto& card : player.getCharCards())
 			{
+					if (callCount == 1) {
+						if (card.getId()  == 1) {
+							socket.write(" 1: Moordenaar:");
+							socket.write("\r\n 1: grab 2 pieces of gold");
+							socket.write("\r\n 2: grab 2 building cards and keep one");
+							socket.write("\r\n 3: grab 2 use character power");
+							int answer = recieveAnswerFromPlayer(3);
+							break;
+						}
+						
+			
+
+				}
+
+					if (callCount == 2) {
+						if (card.getId() == 2) {
+
+							socket.write(" 1: Dief:");
+							socket.write("\r\n 1: grab 2 pieces of gold");
+							socket.write("\r\n 2: grab 2 building cards and keep one");
+							socket.write("\r\n 3: grab 2 use character power");
+							int answer = recieveAnswerFromPlayer(3);
+							break;
+						}
+
+					
+				}
+					if (callCount == 3) {
+						if (card.getId() == 3) {
+
+							socket.write(" 1: Magier:");
+							socket.write("\r\n 1: grab 2 pieces of gold");
+							socket.write("\r\n 2: grab 2 building cards and keep one");
+							socket.write("\r\n 3: grab 2 use character power");
+							int answer = recieveAnswerFromPlayer(3);
+							break;
+						}
+
+					
+				}
+					if (callCount == 4) {
+						if (card.getId() == 4) {
+
+							socket.write(" 1: Koning:");
+							socket.write("\r\n 1: grab 2 pieces of gold");
+							socket.write("\r\n 2: grab 2 building cards and keep one");
+							socket.write("\r\n 3: grab 2 use character power");
+							int answer = recieveAnswerFromPlayer(3);
+							break;
+						}
+
+					
+				}
+					if (callCount == 5) {
+						if (card.getId() == 5) {
+
+							socket.write(" 1: Prediker:");
+							socket.write("\r\n 1: grab 2 pieces of gold");
+							socket.write("\r\n 2: grab 2 building cards and keep one");
+							socket.write("\r\n 3: grab 2 use character power");
+							int answer = recieveAnswerFromPlayer(3);
+							break;
+						}
+
+					
+				}
+					if (callCount == 6) {
+						if (card.getId() == 6) {
+
+							socket.write(" 1: Koopman:");
+							socket.write("\r\n 1: grab 2 pieces of gold");
+							socket.write("\r\n 2: grab 2 building cards and keep one");
+							socket.write("\r\n 3: grab 2 use character power");
+							int answer = recieveAnswerFromPlayer(3);
+							break;
+						}
+
+					
+				}
+					if (callCount == 7) {
+						if (card.getId() == 7) {
+
+							socket.write(" 1: Bouwmeester:");
+							socket.write("\r\n 1: grab 2 pieces of gold");
+							socket.write("\r\n 2: grab 2 building cards and keep one");
+							socket.write("\r\n 3: grab 2 use character power");
+							int answer = recieveAnswerFromPlayer(3);
+							break;
+						}
+
+					
+				}
+					if (callCount == 8) {
+						if (card.getId() == 8) {
+
+							socket.write(" 1: Condottiere:");
+							socket.write("\r\n 1: grab 2 pieces of gold");
+							socket.write("\r\n 2: grab 2 building cards and keep one");
+							socket.write("\r\n 3: grab 2 use character power");
+							int answer = recieveAnswerFromPlayer(3);
+							break;
+						}
+
+					
+				}
+
 				
 			}
+	
+			switchTurn();
 
 		}
-
 		callCount++;
 	}
 
 	sendMessageToClients("The chars have been called, end of the round\r\n", 3);
-	cleanRound();
+	//cleanRound();
 }
 
 void GameController::cleanRound() {
