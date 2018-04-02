@@ -269,6 +269,64 @@ void GameController::execPlayerTurn(Player &player, const CharacterCard charCard
 	while (secondStage)
 	{
 		sendMessageToClients("\r\nChoose what to do next: \r\n", player.id);
+
+		std::string message{ "" };
+
+		int countOptions{ 0 };
+		int indexUseCard{ 0 };
+		int indexBuild{ 0 };
+		int indexShowInfo{ 0 };
+		int indexEndTurn{ 0 };
+
+		if (!usedCharCard)
+		{
+			countOptions++;
+			message.append(std::to_string(countOptions) + ": Use character power.\r\n");
+			indexUseCard = countOptions;
+		}
+		if (!buildedbuilding)
+		{
+			countOptions++;
+			message.append(std::to_string(countOptions) + ": Use character power.\r\n");
+			indexBuild = countOptions;
+		}
+
+		countOptions++;
+		message.append(std::to_string(countOptions) + ": Use character power.\r\n");
+		indexShowInfo = countOptions;
+
+		countOptions++;
+		message.append(std::to_string(countOptions) + ": Use character power.\r\n");
+		indexEndTurn = countOptions;
+
+		const int answer = recieveAnswerFromPlayer(countOptions);
+
+		if (answer == 0)
+		{
+			return;
+		}
+		else if (answer == indexUseCard)
+		{
+			useCard(player, charCard);
+			usedCharCard = true;
+		}
+		else if (answer == indexBuild)
+		{
+			// TODO:
+		}
+		else if (answer == indexShowInfo)
+		{
+			showPlayerStats(player);
+		}
+		else if (answer == indexEndTurn)
+		{
+			secondStage = false;
+		}
+
+		if (usedCharCard && buildedbuilding)
+		{
+			secondStage = false;
+		}
 	}
 }
 
