@@ -549,6 +549,19 @@ void GameController::executeKoopman(Player & player) {
 }
 void GameController::executeBouwmeester(Player & player)
 {
+	int counter = 0;
+	while (counter < 2) {
+		if (stacks.getAmountOfBuilingCards > 0) {
+			player.addBuildingCard(stacks.getBuildingCard());
+		}
+		else {
+			sendMessageToClients("\r\ buildingcards are empty:", player.id);
+
+		}
+	}
+	sendMessageToClients("\r\ buildingcards added", player.id);
+
+	
 }
 void GameController::executeCondottiere(Player & player)
 {

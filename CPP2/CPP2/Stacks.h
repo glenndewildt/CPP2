@@ -20,6 +20,7 @@ public:
 	const std::string getCharacterCardOptions();
 
 	const int getAmountOfCharacterCards();
+	const int getAmountOfBuilingCards();
 
 	void discardBuildingCard(const BuildingCard b);
 

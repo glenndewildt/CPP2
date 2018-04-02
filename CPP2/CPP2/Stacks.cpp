@@ -63,6 +63,9 @@ const BuildingCard Stacks::getBuildingCard() {
 const int Stacks::getAmountOfCharacterCards() {
 	return characterCards.size();
 }
+const int Stacks::getAmountOfBuilingCards() {
+	return buildingCards.size();
+}
 
 const CharacterCard Stacks::getCharacterCard(const int optionID)
 {
