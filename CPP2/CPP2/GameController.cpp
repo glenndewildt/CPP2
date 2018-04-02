@@ -472,7 +472,7 @@ void GameController::executeDief(Player & player)
 	switch (answer) {
 	case 1:
 		stolenChar = CharacterCard::CharType::Moordenaar;
-		message = " Mppdernaa ";
+		message = " Moordernaar ";
 		break;
 	case 2:
 		stolenChar = CharacterCard::CharType::Magier;
@@ -504,6 +504,28 @@ void GameController::executeDief(Player & player)
 }
 void GameController::executeMagier(Player & player)
 {
+	sendMessageToClients("\r\You're using magieer, what do you want to do?\r\n", player.id);
+	std::string message{ "" };
+
+	message.append("1: switch hand with someone else\r\n");
+	message.append("2: naar keuze een aantal handkaarten afleggen en een gelijk aantal gebouwenkaarten trekken \r\n");
+
+
+	sendMessageToClients(message, player.id);
+
+	const int answer = recieveAnswerFromPlayer(7);
+	if (answer == 0)return;
+
+	switch (answer) {
+	case 1:
+		message = " switched with other player ";
+		break;
+	case 2:
+		for (CharacterCard& charCard : player.getCharCards) {
+			sendMessageToClients("\r\1:"+ charCard.getName, player.id);
+		}
+		message = "  ";
+	}
 }
 void GameController::executeKoning(Player & player)
 {
