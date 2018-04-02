@@ -38,7 +38,9 @@ private:
 	void execPickChar(int count);
 	void execCallChar();
 	void execPlayerTurn(Player&, const CharacterCard);
+	void endgame();
 	void cleanRound();
+	int calculateScore(Player& player);
 
 	void useCard(Player& player, const CharacterCard charCard);
 	void getGoldOrBuilding(Player& player);

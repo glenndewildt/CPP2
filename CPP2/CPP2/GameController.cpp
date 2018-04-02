@@ -85,6 +85,7 @@ void GameController::continueGame()
 		gameStage = PICKING_CHARACTERS;
 		break;
 	case ENDING:
+		endgame();
 		break;
 	}
 }
@@ -269,6 +270,45 @@ void GameController::execPlayerTurn(Player &player, const CharacterCard charCard
 	{
 		sendMessageToClients("\r\nChoose what to do next: \r\n", player.id);
 	}
+}
+
+void GameController::endgame()
+{
+	sendMessageToClients("\r\nThe game has come to an end\r\n", 3);
+
+	auto& player1 = clients[0]->get_player();
+	auto& player2 = clients[0]->get_player();
+
+	int scoreP1 = calculateScore(player1);
+	int scoreP2 = calculateScore(player2);
+
+
+
+	sendMessageToClients("\r\nTo quit the game please type 'exit'\r\n", 3);
+	running = false;
+}
+
+void GameController::calculateScore(Player& player)
+{
+	int score{ 0 };
+
+	bool blue{ false }, red{ false }, green{ false }, yellow{ false };
+
+	std::vector<BuildingCard>::iterator it;
+
+	for (it = player.getBuildings().begin; it != player.getBuildings().end(); it++)
+	{
+		score += std::stoi(it->get_cost());
+		if (it->get_color() == "geel") yellow = true;
+		if (it->get_color() == "rood") red = true;
+		if (it->get_color() == "blauw") blue = true;
+		if (it->get_color() == "groen") green = true;
+	}
+
+	if (blue && green && red && yellow) score += 3;
+	if (player.getBuildings().size() >= 8) score += 2;
+
+	return points;
 }
 
 void GameController::useCard(Player& player, CharacterCard charCard)
