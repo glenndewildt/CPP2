@@ -282,13 +282,28 @@ void GameController::endgame()
 	int scoreP1 = calculateScore(player1);
 	int scoreP2 = calculateScore(player2);
 
+	if (firstWinPlayerId == 1) scoreP1 += 4;
+	if (firstWinPlayerId == 2) scoreP2 += 4;
 
+	sendMessageToClients(player1.get_name() + " got " + std::to_string(scoreP1) + "points\r\n", 3);
+	sendMessageToClients(player2.get_name() + " got " + std::to_string(scoreP2) + "points\r\n", 3);
+
+	sendMessageToClients("That means that this game was won by: ", 3);
+	if (scoreP1 > scoreP2) {
+		sendMessageToClients(player1.get_name(), 3);
+	}
+	else if (scoreP2 > scoreP1) {
+		sendMessageToClients(player2.get_name(), 3);
+	}
+	else {
+		sendMessageToClients("no one, it was a tie", 3);
+	}
 
 	sendMessageToClients("\r\nTo quit the game please type 'exit'\r\n", 3);
 	running = false;
 }
 
-void GameController::calculateScore(Player& player)
+int GameController::calculateScore(Player& player)
 {
 	int score{ 0 };
 
@@ -296,7 +311,7 @@ void GameController::calculateScore(Player& player)
 
 	std::vector<BuildingCard>::iterator it;
 
-	for (it = player.getBuildings().begin; it != player.getBuildings().end(); it++)
+	for (it = player.getBuildings().begin(); it != player.getBuildings().end(); it++)
 	{
 		score += std::stoi(it->get_cost());
 		if (it->get_color() == "geel") yellow = true;
@@ -308,7 +323,7 @@ void GameController::calculateScore(Player& player)
 	if (blue && green && red && yellow) score += 3;
 	if (player.getBuildings().size() >= 8) score += 2;
 
-	return points;
+	return score;
 }
 
 void GameController::useCard(Player& player, CharacterCard charCard)
@@ -383,7 +398,8 @@ void GameController::showPlayerStats(Player& player)
 
 	std::vector<BuildingCard>::iterator bpIt;
 
-	for (bpIt = player.getBuildingCards().begin(); bpIt != player.getBuildingCards().end(); bpIt++)
+	auto buildingCards = player.getBuildingCards();
+	for (bpIt = buildingCards.begin(); bpIt != buildingCards.end(); bpIt++)
 	{
 		sendMessageToClients("Name: " + bpIt->get_kind() + "\tColor: " + bpIt->get_color() + "\tCost: " + bpIt->get_cost() + "\r\n", player.id);
 	}
@@ -392,7 +408,8 @@ void GameController::showPlayerStats(Player& player)
 
 	std::vector<BuildingCard>::iterator bbIt;
 
-	for (bbIt = player.getBuildings().begin(); bbIt != player.getBuildings().end(); bbIt++)
+	auto buildings = player.getBuildings();
+	for (bbIt = buildings.begin(); bbIt != buildings.end(); bbIt++)
 	{
 		sendMessageToClients("Name: " + bbIt->get_kind() + "\tColor: " + bbIt->get_color() + "\tCost: " + bbIt->get_cost() + "\r\n", player.id);
 	}
@@ -400,7 +417,8 @@ void GameController::showPlayerStats(Player& player)
 	sendMessageToClients("Character Cards in possession", player.id);
 	std::vector<CharacterCard>::iterator ccIt;
 
-	for (ccIt = player.getCharCards().begin(); ccIt != player.getCharCards().end(); ccIt++)
+	auto charCards = player.getCharCards();
+	for (ccIt = charCards.begin(); ccIt != charCards.end(); ccIt++)
 	{
 		sendMessageToClients("Name: " + ccIt->getName() + "\r\n\r\n", player.id);
 	}
