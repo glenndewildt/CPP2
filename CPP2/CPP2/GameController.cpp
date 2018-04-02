@@ -521,8 +521,8 @@ void GameController::executeMagier(Player & player)
 		message = " switched with other player ";
 		break;
 	case 2:
-		for (CharacterCard& charCard : player.getCharCards) {
-			sendMessageToClients("\r\1:"+ charCard.getName, player.id);
+		for (CharacterCard& charCard : player.getCharCards()) {
+			sendMessageToClients("\r\1:"+ charCard.getName(), player.id);
 		}
 		message = "  ";
 	}
