@@ -532,8 +532,20 @@ void GameController::executeKoning(Player & player)
 }
 void GameController::executePrediker(Player & player)
 {
+	for (BuildingCard& buildingCard : player.getBuildings()) {
+		if (buildingCard.get_color == "blue") {
+			player.add_gold(1);
+		}
+	}
 }
 void GameController::executeKoopman(Player & player) {
+	player.add_gold(1);
+	for (BuildingCard& buildingCard : player.getBuildings()) {
+		if (buildingCard.get_color == "green") {
+			player.add_gold(1);
+		}
+	}
+
 }
 void GameController::executeBouwmeester(Player & player)
 {
