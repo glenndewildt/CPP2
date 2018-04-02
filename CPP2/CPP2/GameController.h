@@ -37,7 +37,7 @@ private:
 	void execPrep();
 	void execPickChar(int count);
 	void execCallChar();
-	void execPlayerTurn();
+	void execPlayerTurn(Player&, const CharacterCard);
 	void cleanRound();
 
 	void sendMessageToClients(const std::string message, const int playerId);

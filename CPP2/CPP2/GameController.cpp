@@ -108,7 +108,7 @@ void GameController::execPrep()
 	}
 }
 
-void GameController::execPlayerTurn() {
+void GameController::execPlayerTurn(Player &player, const CharacterCard charCard) {
 	for each (const std::shared_ptr<ClientInfo> client in clients)
 	{
 		auto &socket = client->get_socket();
@@ -263,11 +263,16 @@ void GameController::execCallChar() {
 
 			std::vector<CharacterCard>::iterator it;
 
-			for (it = player.getCharCards().begin(); it != player.getCharCards().end(); it++)
+			auto cards = player.getCharCards();
+			for (it = cards.begin(); it != cards.end(); it++)
 			{
-				
+				auto thisreached = false;
+				if (it->getId() == callCount) {
+					execPlayerTurn(player, *it);
+				}
 			}
 
+			auto reached = false;
 		}
 
 		callCount++;
