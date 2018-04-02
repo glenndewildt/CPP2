@@ -453,6 +453,54 @@ void GameController::executeMoordenaar(Player & player)
 
 void GameController::executeDief(Player & player)
 {
+	sendMessageToClients("\r\You're using dief, who would you like to rob?\r\n", player.id);
+	std::string message{ "" };
+
+	message.append("1: Moordenaar\r\n");
+	message.append("2: Magier\r\n");
+	message.append("3: Koning\r\n");
+	message.append("4: Prediker\r\n");
+	message.append("5: Koopman\r\n");
+	message.append("6: Bouwmeester\r\n");
+	message.append("7: Condotierre\r\n");
+
+	sendMessageToClients(message, player.id);
+
+	const int answer = recieveAnswerFromPlayer(7);
+	if (answer == 0)return;
+
+	switch (answer) {
+	case 1:
+		stolenChar = CharacterCard::CharType::Moordenaar;
+		message = " Mppdernaa ";
+		break;
+	case 2:
+		stolenChar = CharacterCard::CharType::Magier;
+		message = " Magier ";
+		break;
+	case 3:
+		stolenChar = CharacterCard::CharType::Koning;
+		message = " Koning ";
+		break;
+	case 4:
+		stolenChar = CharacterCard::CharType::Prediker;
+		message = " Prediker ";
+		break;
+	case 5:
+		stolenChar = CharacterCard::CharType::Koopman;
+		message = " Koopman ";
+		break;
+	case 6:
+		stolenChar = CharacterCard::CharType::Bouwmeester;
+		message = " Bouwmeester ";
+		break;
+	case 7:
+		stolenChar = CharacterCard::CharType::Condottiere;
+		message = " Condottiere ";
+		break;
+	}
+
+	sendMessageToClients("\r\nThe " + message + " Has been chosen to steel from. you will steel his gold when his turn begins!\r\n", 3);
 }
 void GameController::executeMagier(Player & player)
 {
