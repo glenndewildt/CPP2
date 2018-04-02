@@ -533,7 +533,7 @@ void GameController::executeKoning(Player & player)
 void GameController::executePrediker(Player & player)
 {
 	for (BuildingCard& buildingCard : player.getBuildings()) {
-		if (buildingCard.get_color == "blue") {
+		if (buildingCard.get_color() == "blue") {
 			player.add_gold(1);
 		}
 	}
@@ -541,7 +541,7 @@ void GameController::executePrediker(Player & player)
 void GameController::executeKoopman(Player & player) {
 	player.add_gold(1);
 	for (BuildingCard& buildingCard : player.getBuildings()) {
-		if (buildingCard.get_color == "green") {
+		if (buildingCard.get_color() == "green") {
 			player.add_gold(1);
 		}
 	}
@@ -551,7 +551,7 @@ void GameController::executeBouwmeester(Player & player)
 {
 	int counter = 0;
 	while (counter < 2) {
-		if (stacks.getAmountOfBuilingCards > 0) {
+		if (stacks.getAmountOfBuilingCards() > 0) {
 			player.addBuildingCard(stacks.getBuildingCard());
 		}
 		else {
@@ -560,7 +560,8 @@ void GameController::executeBouwmeester(Player & player)
 		}
 	}
 	sendMessageToClients("\r\ buildingcards added", player.id);
-
+	for (auto& buildingCard: player.getBuildingCards()) {
+	}
 	
 }
 void GameController::executeCondottiere(Player & player)
