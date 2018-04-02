@@ -273,7 +273,32 @@ void GameController::execPlayerTurn(Player &player, const CharacterCard charCard
 
 void GameController::useCard(Player& player, CharacterCard charCard)
 {
-
+	switch (charCard.getType()) {
+	case CharacterCard::CharType::Moordenaar:
+		executeMoordenaar(player);
+		break;
+	case CharacterCard::CharType::Dief:
+		executeDief(player);
+		break;
+	case CharacterCard::CharType::Magier:
+		executeMagier(player);
+		break;
+	case CharacterCard::CharType::Koning:
+		executeKoning(player);
+		break;
+	case CharacterCard::CharType::Prediker:
+		executePrediker(player);
+		break;
+	case CharacterCard::CharType::Koopman:
+		executeKoopman(player);
+		break;
+	case CharacterCard::CharType::Bouwmeester:
+		executeBouwmeester(player);
+		break;
+	case CharacterCard::CharType::Condottiere:
+		executeCondottiere(player);
+		break;
+	}
 }
 
 void GameController::getGoldOrBuilding(Player& player)
@@ -372,4 +397,77 @@ void GameController::handleClientInput(const ClientCommand command)
 			client << "\r\nIt's not your turn right now. Wait for the other player to finish his turn...\r\n";
 		}
 	}
+}
+
+void GameController::executeMoordenaar(Player & player)
+{
+	sendMessageToClients("\r\You're using Moordenaar, who would you like to kill?\r\n", player.id);
+	std::string message{ "" };
+
+	message.append("1: Dief\r\n");
+	message.append("2: Magier\r\n");
+	message.append("3: Koning\r\n");
+	message.append("4: Prediker\r\n");
+	message.append("5: Koopman\r\n");
+	message.append("6: Bouwmeester\r\n");
+	message.append("7: Condotierre\r\n");
+
+	sendMessageToClients(message, player.id);
+
+	const int answer = recieveAnswerFromPlayer(7);
+	if (answer == 0)return;
+
+	switch (answer) {
+	case 1:
+		killedChar = CharacterCard::CharType::Dief;
+		message = " Dief ";
+		break;
+	case 2:
+		killedChar = CharacterCard::CharType::Magier;
+		message = " Magier ";
+		break;
+	case 3:
+		killedChar = CharacterCard::CharType::Koning;
+		message = " Koning ";
+		break;
+	case 4:
+		killedChar = CharacterCard::CharType::Prediker;
+		message = " Prediker ";
+		break;
+	case 5:
+		killedChar = CharacterCard::CharType::Koopman;
+		message = " Koopman ";
+		break;
+	case 6:
+		killedChar = CharacterCard::CharType::Bouwmeester;
+		message = " Bouwmeester ";
+		break;
+	case 7:
+		killedChar = CharacterCard::CharType::Condottiere;
+		message = " Condottiere ";
+		break;
+	}
+
+	sendMessageToClients("\r\nThe " + message + " has been killed and he can not be used this turn!\r\n", 3);
+}
+
+void GameController::executeDief(Player & player)
+{
+}
+void GameController::executeMagier(Player & player)
+{
+}
+void GameController::executeKoning(Player & player)
+{
+}
+void GameController::executePrediker(Player & player)
+{
+}
+void GameController::executeKoopman(Player & player) {
+}
+void GameController::executeBouwmeester(Player & player)
+{
+}
+void GameController::executeCondottiere(Player & player)
+{
 }

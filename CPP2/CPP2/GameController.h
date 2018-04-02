@@ -45,13 +45,13 @@ private:
 	void showPlayerStats(Player& player);
 
 	void executeMoordenaar(Player& player);
-	void ExecuteDief(Player& player);
-	void ExecuteMagier(Player& player);
-	void ExecuteKoning(Player& player);
-	void ExecutePrediker(Player& player);
-	void ExecuteKoopman(Player& player);
-	void ExecuteBouwmeester(Player& player);
-	void ExecuteCondottiere(Player& player);
+	void executeDief(Player& player);
+	void executeMagier(Player& player);
+	void executeKoning(Player& player);
+	void executePrediker(Player& player);
+	void executeKoopman(Player& player);
+	void executeBouwmeester(Player& player);
+	void executeCondottiere(Player& player);
 
 	void sendMessageToClients(const std::string message, const int playerId);
 	const int recieveAnswerFromPlayer(const int amountOfOptions);
