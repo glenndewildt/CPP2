@@ -24,7 +24,7 @@ public:
 
 	int get_gold() const { return gold; }
 	void set_gold(const int& new_gold) { gold = new_gold; }
-
+	void add_gold(const int& toAdd) { gold += toAdd; }
 
 	std::vector<CharacterCard> getCharCards() const { return charCards; }
 	void addCharCard(const CharacterCard& newCard) { charCards.push_back(newCard); }

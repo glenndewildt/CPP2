@@ -37,18 +37,35 @@ private:
 	void execPrep();
 	void execPickChar(int count);
 	void execCallChar();
-	void execPlayerTurn();
+	void execPlayerTurn(Player&, const CharacterCard);
 	void cleanRound();
+
+	void useCard(Player& player, const CharacterCard charCard);
+	void getGoldOrBuilding(Player& player);
+	void showPlayerStats(Player& player);
+
+	void executeMoordenaar(Player& player);
+	void ExecuteDief(Player& player);
+	void ExecuteMagier(Player& player);
+	void ExecuteKoning(Player& player);
+	void ExecutePrediker(Player& player);
+	void ExecuteKoopman(Player& player);
+	void ExecuteBouwmeester(Player& player);
+	void ExecuteCondottiere(Player& player);
 
 	void sendMessageToClients(const std::string message, const int playerId);
 	const int recieveAnswerFromPlayer(const int amountOfOptions);
 	std::pair<std::string, int> playerCommand;
 
-	Stacks stacks;
-	int currentTurnPlayerId{ 1 };
-	int round{ 0 };
-	int firstWinPlayerId{ 0 };
 
+	Stacks stacks;
+	int round{ 0 };
+	int thiefPlayerId{ 0 };
+	int firstWinPlayerId{ 0 };
+	int currentTurnPlayerId{ 1 };
+
+	CharacterCard::CharType stolenChar { CharacterCard::CharType::None };
+	CharacterCard::CharType killedChar { CharacterCard::CharType::None };
 
 	// STATICS
 	const int BuildingLimitToEndGame { 8 };
