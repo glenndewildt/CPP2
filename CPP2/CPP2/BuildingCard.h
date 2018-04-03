@@ -16,7 +16,10 @@ public:
 
 		return strm;
 	}
-
+	friend bool operator==(BuildingCard const a, BuildingCard const b)
+	{
+		return a.kind == b.kind;
+	}
 	BuildingCard& operator=(const BuildingCard& other) {
 		kind = other.kind;
 		cost = other.cost;

@@ -11,6 +11,8 @@
 
 #include <string>
 #include <vector>
+#include <algorithm>   
+
 
 #include "BuildingCard.h"
 #include "CharacterCard.h"
@@ -32,10 +34,15 @@ public:
 
 	std::vector<BuildingCard> getBuildingCards() const { return buildingCards; }
 	void addBuildingCard(const BuildingCard& newCard) { buildingCards.push_back(newCard); }
-	//void delBuildingCard(const BuildingCard& newCard) { building_carts.erase(newCard); }
+	void deleteBuildingCard(const BuildingCard& newCard) { 
+		std::remove(buildingCards.begin(), buildingCards.end(), newCard); 
+	}
+
 
 	std::vector<BuildingCard> getBuildings() const { return buildedBuildings; }
 	void buildBuildingCard(const BuildingCard& newCard) { buildedBuildings.push_back(newCard); }
+	void deletebuildBuildingCard(const BuildingCard& newCard) { std::remove(buildedBuildings.begin(), buildedBuildings.end(), newCard); }
+
 
 	void setKing() { king = true; };
 	void unsetKing() { king = false; };

@@ -756,16 +756,17 @@ void GameController::executeBouwmeester(Player & player)
 	sendMessageToClients("\r\ buildingcards added", player.id);
 	while(counter2< 3) {
 		for (auto& buildingCard : player.getBuildingCards()) {
-			sendMessageToClients("\r\ build building:"+ buildingCard.get_kind()+ "\r", player.id);
+			sendMessageToClients("\r\ build building:"+ buildingCard.get_kind()+ "\r\n", player.id);
 		}
 		// make chose building card to build
-		sendMessageToClients("\r\ chose building to build \r", player.id);
+		sendMessageToClients("\r\ chose building to build \r\n", player.id);
 
 		const int answer = recieveAnswerFromPlayer(player.getBuildingCards().size());
 		int itCounter = 0;
 		for (auto& buildingCard : player.getBuildingCards()) {
 			if (answer == itCounter) {
 				player.buildBuildingCard(buildingCard);
+				player.deletebuildBuildingCard(buildingCard);
 				sendMessageToClients("\r\ buildingcards added", player.id);
 				counter2++;
 			}
