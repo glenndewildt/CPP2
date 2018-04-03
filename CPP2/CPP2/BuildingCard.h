@@ -18,7 +18,8 @@ public:
 	}
 	friend bool operator==(BuildingCard const a, BuildingCard const b)
 	{
-		return a.kind == b.kind;
+		bool t = a.kind == b.kind;
+		return t;
 	}
 	BuildingCard& operator=(const BuildingCard& other) {
 		kind = other.kind;
