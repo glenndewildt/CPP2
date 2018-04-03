@@ -37,6 +37,12 @@ public:
 	void deleteBuildingCard(const BuildingCard& newCard) { 
 		std::remove(buildingCards.begin(), buildingCards.end(), newCard); 
 	}
+	void switchCards(const vector<BuildingCard>& buidlings, const vector<CharacterCard>& charaCards) {
+		buildingCards = buidlings;
+		charCards = charaCards;
+	
+	}
+
 
 
 	std::vector<BuildingCard> getBuildings() const { return buildedBuildings; }

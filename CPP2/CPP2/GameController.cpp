@@ -683,7 +683,7 @@ void GameController::executeDief(Player & player)
 
 	sendMessageToClients("\r\nThe " + message + " Has been chosen to steel from. you will steel his gold when his turn begins!\r\n", 3);
 }
-void GameController::executeMagier(Player & player)
+void GameController::executeMagier(Player& player)
 {
 	sendMessageToClients("\r\You're using magieer, what do you want to do?\r\n", player.id);
 	std::string message{ "" };
@@ -696,22 +696,58 @@ void GameController::executeMagier(Player & player)
 
 	const int answer = recieveAnswerFromPlayer(7);
 	if (answer == 0)return;
+	std::vector<std::shared_ptr<ClientInfo>>::iterator clientIt;
 
 	switch (answer) {
 	case 1:
 		// make :: switch player cards
+
+		for (clientIt = clients.begin(); clientIt != clients.end(); clientIt++)
+		{
+			vector<BuildingCard> tempbuildings = player.getBuildingCards();
+			vector<CharacterCard> tempchar = player.getCharCards();
+			auto &player2 = clientIt->get()->get_player();
+			if (player.id != player2.id) {
+				player.switchCards(player2.getBuildingCards(), player2.getCharCards());
+				player2.switchCards(tempbuildings, tempchar);
+			}
+		}
+
+
+
 		message = " switched with other player ";
 		break;
 	case 2:
 		for (CharacterCard& charCard : player.getCharCards()) {
-			sendMessageToClients("\r\1:"+ charCard.getName(), player.id);
-			// make :: delete cards
-			// make :: add card
+			sendMessageToClients("\r\:"+ charCard.getName()+"\r\n", player.id);
+		
+		}
+		const int answer = recieveAnswerFromPlayer(player.getBuildingCards().size());
+		int itCounter = 0;
+		for (auto& buildingCard : player.getCharCards()) {
+			if (answer == itCounter) {
+				//TODO::delete char card
+				// add buidling card
+				player.addBuildingCard(stacks.getBuildingCard());
+
+				sendMessageToClients("\r\ buildingcards added", player.id);
+			}
+			itCounter++;
 		}
 		for (BuildingCard& charCard : player.getBuildingCards()) {
 			sendMessageToClients("\r\1:" + charCard.get_kind(), player.id);
-			// make :: delete cards
-			// make :: add card
+
+		}
+		 itCounter = 0;
+		for (auto& buildingCard : player.getBuildingCards()) {
+			if (answer == itCounter) {
+				//TODO::delete char card
+				// add buidling card
+				player.addBuildingCard(stacks.getBuildingCard());
+
+				sendMessageToClients("\r\ buildingcards added", player.id);
+			}
+			itCounter++;
 		}
 
 		message = "  ";
@@ -766,7 +802,8 @@ void GameController::executeBouwmeester(Player & player)
 		for (auto& buildingCard : player.getBuildingCards()) {
 			if (answer == itCounter) {
 				player.buildBuildingCard(buildingCard);
-				player.deletebuildBuildingCard(buildingCard);
+				// TODO:: make a good deletebuidling fuction
+				//player.deletebuildBuildingCard(buildingCard);
 				sendMessageToClients("\r\ buildingcards added", player.id);
 				counter2++;
 			}
