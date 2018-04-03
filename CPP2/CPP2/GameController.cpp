@@ -44,7 +44,6 @@ void GameController::startGame()
 			socket.write("\r\n Gold:" + std::to_string(player.get_gold()));
 			socket.write("\r\n Building cards:" + std::to_string(player.getBuildingCards().size()));
 			socket.write("\r\n Character cards:" + std::to_string(player.getCharCards().size()));
-
 		}
 		
 
@@ -80,7 +79,7 @@ void GameController::continueGame()
 		gameStage = CALLING_CHARACTERS;
 		break;
 	case CALLING_CHARACTERS:
-		sendMessageToClients("Characters are chosen, now we start calling them", 3);
+		sendMessageToClients("Characters are chosen, now we start calling them", -1);
 		execCallChar();
 		gameStage = PICKING_CHARACTERS;
 		break;
@@ -186,13 +185,13 @@ void GameController::execCallChar() {
 		callCount++;
 	}
 
-	sendMessageToClients("The chars have been called, end of the round\r\n", 3);
+	sendMessageToClients("The chars have been called, end of the round\r\n", -1);
 	cleanRound();
 }
 
 void GameController::execPlayerTurn(Player &player, const CharacterCard charCard) {
 	currentTurnPlayerId = player.id;
-	sendMessageToClients(player.get_name() + " is now on turn with " + charCard.getName(), 3);
+	sendMessageToClients(player.get_name() + " is now on turn with " + charCard.getName(), -1);
 
 	if (charCard.getType() == stolenChar) {
 		for each (auto client in clients) {
@@ -200,7 +199,7 @@ void GameController::execPlayerTurn(Player &player, const CharacterCard charCard
 				auto& thiefPlayer = client->get_player();
 				thiefPlayer.add_gold(player.get_gold());
 
-				sendMessageToClients("\r\nThe thief stole from " + charCard.getName() + ". " + thiefPlayer.get_name() + " now has " + std::to_string(thiefPlayer.get_gold()) + "\r\n", 3);
+				sendMessageToClients("\r\nThe thief stole from " + charCard.getName() + ". " + thiefPlayer.get_name() + " now has " + std::to_string(thiefPlayer.get_gold()) + "\r\n", -1);
 			}
 		}
 
@@ -353,7 +352,7 @@ void GameController::execPlayerTurn(Player &player, const CharacterCard charCard
 
 void GameController::endgame()
 {
-	sendMessageToClients("\r\nThe game has come to an end\r\n", 3);
+	sendMessageToClients("\r\nThe game has come to an end\r\n", -1);
 
 	auto& player1 = clients[0]->get_player();
 	auto& player2 = clients[0]->get_player();
@@ -364,21 +363,21 @@ void GameController::endgame()
 	if (firstWinPlayerId == 1) scoreP1 += 4;
 	if (firstWinPlayerId == 2) scoreP2 += 4;
 
-	sendMessageToClients(player1.get_name() + " got " + std::to_string(scoreP1) + "points\r\n", 3);
-	sendMessageToClients(player2.get_name() + " got " + std::to_string(scoreP2) + "points\r\n", 3);
+	sendMessageToClients(player1.get_name() + " got " + std::to_string(scoreP1) + "points\r\n", -1);
+	sendMessageToClients(player2.get_name() + " got " + std::to_string(scoreP2) + "points\r\n", -1);
 
-	sendMessageToClients("That means that this game was won by: ", 3);
+	sendMessageToClients("That means that this game was won by: ", -1);
 	if (scoreP1 > scoreP2) {
-		sendMessageToClients(player1.get_name(), 3);
+		sendMessageToClients(player1.get_name(), -1);
 	}
 	else if (scoreP2 > scoreP1) {
-		sendMessageToClients(player2.get_name(), 3);
+		sendMessageToClients(player2.get_name(), -1);
 	}
 	else {
-		sendMessageToClients("no one, it was a tie", 3);
+		sendMessageToClients("no one, it was a tie", -1);
 	}
 
-	sendMessageToClients("\r\nTo quit the game please type 'exit'\r\n", 3);
+	sendMessageToClients("\r\nTo quit the game please type 'exit'\r\n", -1);
 	running = false;
 }
 
@@ -446,7 +445,7 @@ const int GameController::buildBuilding(Player& player)
 				
 				player.buildBuildingCard(player.getBuildingCards()[answer - 1]);
 
-				sendMessageToClients("\r\n" + player.get_name() + " built the " + player.getBuildingCards()[answer - 1].get_kind() + "!\r\n", 3);
+				sendMessageToClients("\r\n" + player.get_name() + " built the " + player.getBuildingCards()[answer - 1].get_kind() + "!\r\n", -1);
 				
 				player.pay_gold(stoi(player.getBuildingCards()[answer - 1].get_cost()));
 
@@ -507,7 +506,7 @@ void GameController::getGoldOrBuilding(Player& player)
 	if (answer == 1)
 	{
 		player.add_gold(2);
-		sendMessageToClients("\r\n" + player.get_name() + " has chosen for 2 gold pieces\r\n", 3);
+		sendMessageToClients("\r\n" + player.get_name() + " has chosen for 2 gold pieces\r\n", -1);
 	}
 	else if (answer == 2)
 	{
@@ -529,7 +528,7 @@ void GameController::getGoldOrBuilding(Player& player)
 			stacks.discardBuildingCard(fst);
 		}
 		
-		sendMessageToClients("\r\nA building card was taken by " + player.get_name() + "\r\n", 3);
+		sendMessageToClients("\r\nA building card was taken by " + player.get_name() + "\r\n", -1);
 	}
 }
 
@@ -704,7 +703,7 @@ void GameController::executeMoordenaar(Player & player)
 		break;
 	}
 
-	sendMessageToClients("\r\nThe " + message + " has been killed and he can not be used this turn!\r\n", 3);
+	sendMessageToClients("\r\nThe " + message + " has been killed and he can not be used this turn!\r\n", -1);
 }
 
 void GameController::executeDief(Player & player)
@@ -756,7 +755,7 @@ void GameController::executeDief(Player & player)
 		break;
 	}
 
-	sendMessageToClients("\r\nThe " + message + " Has been chosen to steel from. you will steel his gold when his turn begins!\r\n", 3);
+	sendMessageToClients("\r\nThe " + message + " Has been chosen to steel from. you will steel his gold when his turn begins!\r\n", -1);
 }
 void GameController::executeMagier(Player& player)
 {
@@ -843,7 +842,7 @@ void GameController::executeKoning(Player & player)
 				client->get_player().unsetKing();
 		}
 
-		sendMessageToClients(player.get_name() + " has become the king and may start first the next round", 3);
+		sendMessageToClients(player.get_name() + " has become the king and may start first the next round", -1);
 	}
 
 	std::vector<BuildingCard>::iterator it;
@@ -855,7 +854,7 @@ void GameController::executeKoning(Player & player)
 	}
 
 	player.add_gold(additionalGold);
-	sendMessageToClients("\r\n" + player.get_name() + " got " + std::to_string(additionalGold) + " for have that amount of yellow buildings up!\r\n", 3);
+	sendMessageToClients("\r\n" + player.get_name() + " got " + std::to_string(additionalGold) + " for have that amount of yellow buildings up!\r\n", -1);
 	/* */
 }
 
