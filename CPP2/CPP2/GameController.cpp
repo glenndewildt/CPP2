@@ -234,7 +234,7 @@ void GameController::execPlayerTurn(Player &player, const CharacterCard charCard
 			indexPower = countOptions;
 		}
 
-		if (tookSomething)
+		if (!tookSomething)
 		{
 			countOptions++;
 			message.append(std::to_string(countOptions) + ": Recieve 2 gold or a building card.\r\n ");
@@ -500,7 +500,8 @@ void GameController::cleanRound() {
 		auto &player = clientIt->get()->get_player();
 
 		std::vector<CharacterCard>::iterator charIt;
-		for (charIt = player.getCharCards().begin(); charIt != player.getCharCards().end(); charIt++)
+		auto charCards = player.getCharCards();
+		for (charIt = charCards.begin(); charIt != charCards.end(); charIt++)
 		{
 			stacks.addCharacterCard(*charIt);
 		}
@@ -582,7 +583,7 @@ void GameController::handleClientInput(const ClientCommand command)
 
 void GameController::executeMoordenaar(Player & player)
 {
-	sendMessageToClients("\r\You're using Moordenaar, who would you like to kill?\r\n", player.id);
+	/*sendMessageToClients("\r\You're using Moordenaar, who would you like to kill?\r\n", player.id);
 	std::string message{ "" };
 
 	message.append("1: Dief\r\n");
@@ -630,11 +631,12 @@ void GameController::executeMoordenaar(Player & player)
 	}
 
 	sendMessageToClients("\r\nThe " + message + " has been killed and he can not be used this turn!\r\n", 3);
+	*/
 }
 
 void GameController::executeDief(Player & player)
 {
-	sendMessageToClients("\r\You're using dief, who would you like to rob?\r\n", player.id);
+	/*sendMessageToClients("\r\You're using dief, who would you like to rob?\r\n", player.id);
 	std::string message{ "" };
 
 	message.append("1: Moordenaar\r\n");
@@ -682,9 +684,11 @@ void GameController::executeDief(Player & player)
 	}
 
 	sendMessageToClients("\r\nThe " + message + " Has been chosen to steel from. you will steel his gold when his turn begins!\r\n", 3);
+*/
 }
 void GameController::executeMagier(Player& player)
 {
+	/* *
 	sendMessageToClients("\r\You're using magieer, what do you want to do?\r\n", player.id);
 	std::string message{ "" };
 
@@ -752,9 +756,11 @@ void GameController::executeMagier(Player& player)
 
 		message = "  ";
 	}
+	/* */
 }
 void GameController::executeKoning(Player & player)
 {
+	/* *
 	if (!player.isKing())
 	{
 		player.setKing();
@@ -778,20 +784,23 @@ void GameController::executeKoning(Player & player)
 
 	player.add_gold(additionalGold);
 	sendMessageToClients("\r\n" + player.get_name() + " got " + std::to_string(additionalGold) + " for have that amount of yellow buildings up!\r\n", 3);
+	/* */
 }
-
 
 void GameController::executePrediker(Player & player)
 {
+	/* *
 	for (BuildingCard& buildingCard : player.getBuildings()) {
 		if (buildingCard.get_color() == "blue") {
 			player.add_gold(1);
 		}
 	}
 	sendMessageToClients("\r\ gold added", player.id);
-
+	/* */
 }
-void GameController::executeKoopman(Player & player) {
+void GameController::executeKoopman(Player & player)
+{
+	/* *
 	player.add_gold(1);
 	for (BuildingCard& buildingCard : player.getBuildings()) {
 		if (buildingCard.get_color() == "green") {
@@ -799,10 +808,11 @@ void GameController::executeKoopman(Player & player) {
 		}
 	}
 	sendMessageToClients("\r\ gold added", player.id);
-
+	/* */
 }
 void GameController::executeBouwmeester(Player & player)
 {
+	/* *
 	int counter = 0;
 	while (counter < 2) {
 		if (stacks.getAmountOfBuilingCards() > 0) {
@@ -838,11 +848,11 @@ void GameController::executeBouwmeester(Player & player)
 		}
 
 	}
-
-	
+	/* */
 }
 void GameController::executeCondottiere(Player & player)
 {
+	/* *
 	std::vector<std::shared_ptr<ClientInfo>>::iterator clientIt;
 
 	bool isCon = false;
@@ -888,4 +898,5 @@ void GameController::executeCondottiere(Player & player)
 			}
 		}
 		sendMessageToClients("\r\ gold added", player.id);
+		/* */
 }
