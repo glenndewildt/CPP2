@@ -755,7 +755,32 @@ void GameController::executeMagier(Player& player)
 }
 void GameController::executeKoning(Player & player)
 {
+	if (!player.isKing())
+	{
+		player.setKing();
+
+		for each (auto client in clients)
+		{
+			if (client->get_player().id != player.id)
+				client->get_player().unsetKing();
+		}
+
+		sendMessageToClients(player.get_name() + " has become the king and may start first the next round", 3);
+	}
+
+	std::vector<BuildingCard>::iterator it;
+	int additionalGold = 0;
+
+	for (it = player.getBuildings().begin(); it != player.getBuildings().end(); it++)
+	{
+		if (it->get_color() == "geel") additionalGold++;
+	}
+
+	player.add_gold(additionalGold);
+	sendMessageToClients("\r\n" + player.get_name() + " got " + std::to_string(additionalGold) + " for have that amount of yellow buildings up!\r\n", 3);
 }
+
+
 void GameController::executePrediker(Player & player)
 {
 	for (BuildingCard& buildingCard : player.getBuildings()) {
@@ -791,11 +816,13 @@ void GameController::executeBouwmeester(Player & player)
 	int counter2 = 0;
 	sendMessageToClients("\r\ buildingcards added", player.id);
 	while(counter2< 3) {
+		int cardCount{ 0 };
 		for (auto& buildingCard : player.getBuildingCards()) {
-			sendMessageToClients("\r\ build building:"+ buildingCard.get_kind()+ "\r\n", player.id);
+			sendMessageToClients("\r\n" + std::to_string(cardCount) + ": " + buildingCard.get_kind()+ "\r\n", player.id);
+			cardCount++;
 		}
 		// make chose building card to build
-		sendMessageToClients("\r\ chose building to build \r\n", player.id);
+		sendMessageToClients("\r\nchose building to build \r\n", player.id);
 
 		const int answer = recieveAnswerFromPlayer(player.getBuildingCards().size());
 		int itCounter = 0;
@@ -804,7 +831,7 @@ void GameController::executeBouwmeester(Player & player)
 				player.buildBuildingCard(buildingCard);
 				// TODO:: make a good deletebuidling fuction
 				//player.deletebuildBuildingCard(buildingCard);
-				sendMessageToClients("\r\ buildingcards added", player.id);
+				sendMessageToClients("\r\nbuildingcards added\r\n", player.id);
 				counter2++;
 			}
 			itCounter++;
