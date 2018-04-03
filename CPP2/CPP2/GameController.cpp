@@ -694,7 +694,7 @@ void GameController::executeMagier(Player& player)
 
 	sendMessageToClients(message, player.id);
 
-	const int answer = recieveAnswerFromPlayer(7);
+	const int answer = recieveAnswerFromPlayer(2);
 	if (answer == 0)return;
 	std::vector<std::shared_ptr<ClientInfo>>::iterator clientIt;
 
@@ -816,4 +816,49 @@ void GameController::executeBouwmeester(Player & player)
 }
 void GameController::executeCondottiere(Player & player)
 {
+	std::vector<std::shared_ptr<ClientInfo>>::iterator clientIt;
+
+	bool isCon = false;
+
+		for (clientIt = clients.begin(); clientIt != clients.end(); clientIt++)
+		{
+			
+			auto &player2 = clientIt->get()->get_player();
+			if (player.id != player2.id) {
+				for (CharacterCard& ch: player2.getCharCards()) {
+					if (ch.getId() == 5) {
+						isCon = true;
+					}
+				}
+				if (!isCon) {
+					for (BuildingCard& building : player2.getBuildings()) {
+						sendMessageToClients("\r\ building " + building.get_kind() + " - " + building.get_cost() + " - " + building.get_color() + "\r\n", player.id);
+
+					}
+					const int answer = recieveAnswerFromPlayer(player.getBuildingCards().size());
+					int itCounter = 0;
+					for (BuildingCard& building : player2.getBuildings()) {
+						if (answer == itCounter) {
+
+							if (player.get_gold() > atoi(building.get_cost().c_str)) {
+								int cost = atoi(building.get_cost().c_str());
+								player2.add_gold(cost - 1);
+								player2.deletebuildBuildingCard(building);
+
+							}
+
+							sendMessageToClients("\r\ buildingcards added", player.id);
+						}
+						itCounter++;
+					}
+				}
+
+			}
+		}
+		for (BuildingCard& buildingCard : player.getBuildings()) {
+			if (buildingCard.get_color() == "red") {
+				player.add_gold(1);
+			}
+		}
+		sendMessageToClients("\r\ gold added", player.id);
 }
