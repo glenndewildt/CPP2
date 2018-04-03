@@ -882,7 +882,7 @@ void GameController::executeKoopman(Player & player)
 	sendMessageToClients("\r\ gold added", player.id);
 	/* */
 }
-void GameController::executeBouwmeester(Player & player)
+void GameController::executeBouwmeester(Player& player)
 {
 	/* */
 	int counter = 0;
@@ -895,32 +895,7 @@ void GameController::executeBouwmeester(Player & player)
 		}
 		counter++;
 	}
-	int counter2 = 0;
-	sendMessageToClients("\r\ buildingcards added", player.id);
-	while(counter2< 3) {
-		int cardCount{ 0 };
-		for (auto& buildingCard : player.getBuildingCards()) {
-			sendMessageToClients("\r\n" + std::to_string(cardCount) + ": " + buildingCard.get_kind()+ "\r\n", player.id);
-			cardCount++;
-		}
-		// make chose building card to build
-		sendMessageToClients("\r\nchose building to build \r\n", player.id);
 
-		const int answer = recieveAnswerFromPlayer(player.getBuildingCards().size());
-		int itCounter = 0;
-		for (auto& buildingCard : player.getBuildingCards()) {
-			if (answer == itCounter) {
-				player.buildBuildingCard(buildingCard);
-				// TODO:: make a good deletebuidling fuction
-				//player.deletebuildBuildingCard(buildingCard);
-				sendMessageToClients("\r\nbuildingcards added\r\n", player.id);
-				counter2++;
-			}
-			itCounter++;
-		}
-
-	}
-	/* */
 }
 void GameController::executeCondottiere(Player & player)
 {
@@ -956,7 +931,9 @@ void GameController::executeCondottiere(Player & player)
 
 							}
 
-							sendMessageToClients("\r\ buildingcards added", player.id);
+							sendMessageToClients("\r\  card deleted  by other player", player.id);
+							sendMessageToClients("\r\  card deleted  by other player", player2.id);
+
 						}
 						itCounter++;
 					}
