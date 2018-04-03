@@ -839,8 +839,8 @@ void GameController::executeCondottiere(Player & player)
 					int itCounter = 0;
 					for (BuildingCard& building : player2.getBuildings()) {
 						if (answer == itCounter) {
-
-							if (player.get_gold() > atoi(building.get_cost().c_str)) {
+							int b = atoi(building.get_cost().c_str());
+							if (player.get_gold() >b) {
 								int cost = atoi(building.get_cost().c_str());
 								player2.add_gold(cost - 1);
 								player2.deletebuildBuildingCard(building);
