@@ -451,7 +451,14 @@ const int GameController::buildBuilding(Player& player)
 
 				auto& buildingCards = player.getBuildingCards();
 				player.deletebuildBuildingCard(buildingCards[answer - 1]);
-
+				int counter = 0;
+				vector<BuildingCard> buildingca = player.getBuildingCards();
+				for (BuildingCard card : buildingca) {
+					if (card == buildingCards[answer - 1]) {
+						buildingCards.erase(buildingCards.begin() + counter);
+					}
+					counter++;
+				}
 				builded++;
 
 				if (firstWinPlayerId == 0 && player.getBuildings().size() >= BuildingLimitToEndGame) firstWinPlayerId = player.id;
@@ -926,12 +933,21 @@ void GameController::executeCondottiere(Player & player)
 							if (player.get_gold() >b) {
 								int cost = atoi(building.get_cost().c_str());
 								player2.add_gold(cost - 1);
-								player2.deletebuildBuildingCard(building);
+								//player2.deletebuildBuildingCard(building);
+								auto& buildingCards = player.getBuildingCards();
+								int counter = 0;
+								vector<BuildingCard> buildingca = player.getBuildingCards();
+								for (BuildingCard card : buildingca) {
+									if (card == building) {
+										buildingCards.erase(buildingCards.begin() + counter);
+									}
+									counter++;
+								}
 
 							}
 
-							sendMessageToClients("\r\  card deleted  by other player", player.id);
-							sendMessageToClients("\r\  card deleted  by other player", player2.id);
+							sendMessageToClients("\r\  deleted building", player.id);
+							sendMessageToClients("\r\  building was deleted", player2.id);
 
 						}
 						itCounter++;

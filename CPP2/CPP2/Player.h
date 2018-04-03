@@ -29,14 +29,22 @@ public:
 	void add_gold(const int& toAdd) { gold += toAdd; }
 	void pay_gold(const int& toPay) { gold -= toPay; }
 
-	std::vector<CharacterCard> getCharCards() const { return charCards; }
+	std::vector<CharacterCard>& getCharCards()  { return charCards; }
 	void addCharCard(const CharacterCard& newCard) { charCards.push_back(newCard); }
 	//void delCharCard(const CharacterCard& new_char_cart) { character_carts.erase(new_char_cart); }
 
 	std::vector<BuildingCard>& getBuildingCards() { return buildingCards; }
 	void addBuildingCard(const BuildingCard& newCard) { buildingCards.push_back(newCard); }
 	void deleteBuildingCard(const BuildingCard& newCard) { 
-		std::remove(buildingCards.begin(), buildingCards.end(), newCard); 
+	//	int counter = 0;
+	//	for (BuildingCard& card: buildingCards) {
+	//		if (card == newCard) {
+	//			buildingCards.erase(buildingCards.begin() + counter);
+	//		}
+	//		counter++;
+	//	}
+	//	buildingCards.pop_back();
+		//std::remove(buildingCards.begin(), buildingCards.end(), newCard); 
 	}
 	void switchCards(const vector<BuildingCard>& buidlings, const vector<CharacterCard>& charaCards) {
 		buildingCards = buidlings;
