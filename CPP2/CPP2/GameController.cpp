@@ -309,6 +309,8 @@ void GameController::execPlayerTurn(Player &player, const CharacterCard charCard
 		message.append(std::to_string(countOptions) + ": Use character power.\r\n");
 		indexEndTurn = countOptions;
 
+		sendMessageToClients(message, player.id);
+
 		const int answer = recieveAnswerFromPlayer(countOptions);
 
 		if (answer == 0)
@@ -379,7 +381,8 @@ int GameController::calculateScore(Player& player)
 
 	std::vector<BuildingCard>::iterator it;
 
-	for (it = player.getBuildings().begin(); it != player.getBuildings().end(); it++)
+	auto buildings = player.getBuildings();
+	for (it = buildings.begin(); it != buildings.end(); it++)
 	{
 		score += std::stoi(it->get_cost());
 		if (it->get_color() == "geel") yellow = true;
