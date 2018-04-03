@@ -45,6 +45,7 @@ private:
 	void useCard(Player& player, const CharacterCard charCard);
 	void getGoldOrBuilding(Player& player);
 	void showPlayerStats(Player& player);
+	const int buildBuilding(Player & player);
 
 	void executeMoordenaar(Player& player);
 	void executeDief(Player& player);

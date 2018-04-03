@@ -441,13 +441,22 @@ const int GameController::buildBuilding(Player& player)
 		}
 		else
 		{
+			
 			if (player.get_gold() >= stoi(buildingCards[answer - 1].get_cost())) {
-				player.getBuildings().push_back(player.getBuildingCards()[answer - 1]);
+				
+				player.buildBuildingCard(player.getBuildingCards()[answer - 1]);
+
 				sendMessageToClients("\r\n" + player.get_name() + " built the " + player.getBuildingCards()[answer - 1].get_kind() + "!\r\n", 3);
-				player.set_gold(player.get_gold() - stoi(player.getBuildings()[answer - 1].get_cost()));
-				player.getBuildingCards().erase(player.getBuildingCards().begin() + answer - 1);
+				
+				player.pay_gold(stoi(player.getBuildingCards()[answer - 1].get_cost()));
+
+				auto& buildingCards = player.getBuildingCards();
+				player.deletebuildBuildingCard(buildingCards[answer - 1]);
+
 				builded++;
+
 				if (firstWinPlayerId == 0 && player.getBuildings().size() >= BuildingLimitToEndGame) firstWinPlayerId = player.id;
+
 				done = true;
 			}
 			else {

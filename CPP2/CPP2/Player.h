@@ -27,12 +27,13 @@ public:
 	int get_gold() const { return gold; }
 	void set_gold(const int& new_gold) { gold = new_gold; }
 	void add_gold(const int& toAdd) { gold += toAdd; }
+	void pay_gold(const int& toPay) { gold -= toPay; }
 
 	std::vector<CharacterCard> getCharCards() const { return charCards; }
 	void addCharCard(const CharacterCard& newCard) { charCards.push_back(newCard); }
 	//void delCharCard(const CharacterCard& new_char_cart) { character_carts.erase(new_char_cart); }
 
-	std::vector<BuildingCard> getBuildingCards() const { return buildingCards; }
+	std::vector<BuildingCard>& getBuildingCards() { return buildingCards; }
 	void addBuildingCard(const BuildingCard& newCard) { buildingCards.push_back(newCard); }
 	void deleteBuildingCard(const BuildingCard& newCard) { 
 		std::remove(buildingCards.begin(), buildingCards.end(), newCard); 
@@ -45,7 +46,7 @@ public:
 
 
 
-	std::vector<BuildingCard> getBuildings() const { return buildedBuildings; }
+	std::vector<BuildingCard>& getBuildings() { return buildedBuildings; }
 	void buildBuildingCard(const BuildingCard& newCard) { buildedBuildings.push_back(newCard); }
 	void deletebuildBuildingCard(const BuildingCard& newCard) { std::remove(buildedBuildings.begin(), buildedBuildings.end(), newCard); }
 
