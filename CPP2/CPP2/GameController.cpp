@@ -222,6 +222,8 @@ void GameController::execPlayerTurn(Player &player, const CharacterCard charCard
 		int indexPower{ 0 };
 		int indexGoldOrBuilding{ 0 };
 		int indexShowStats{ 0 };
+		int indexEndTurn{ 0 };
+
 
 		std::string message{ "" };
 
@@ -243,6 +245,10 @@ void GameController::execPlayerTurn(Player &player, const CharacterCard charCard
 		message.append(std::to_string(countOptions) + ": Show info \r\n");
 		indexShowStats = countOptions;
 
+		countOptions++;
+		message.append(std::to_string(countOptions) + ": End turn \r\n");
+		indexEndTurn = countOptions;
+
 		sendMessageToClients(message, player.id);
 
 		int answer = recieveAnswerFromPlayer(countOptions);
@@ -263,6 +269,10 @@ void GameController::execPlayerTurn(Player &player, const CharacterCard charCard
 		else if (answer == indexShowStats)
 		{
 			showPlayerStats(player);
+		}
+		else if (answer == indexEndTurn)
+		{
+			return;
 		}
 	}
 
@@ -451,7 +461,7 @@ void GameController::getGoldOrBuilding(Player& player)
 
 void GameController::showPlayerStats(Player& player)
 {
-	sendMessageToClients("Player Info: \r\n\r\nGold: " + player.get_gold(), player.id);
+	sendMessageToClients("Player Info: \r\n\r\nGold: " + std::to_string(player.get_gold()), player.id);
 	sendMessageToClients("\r\nBuildingcards in possession: \r\n", player.id);
 
 	std::vector<BuildingCard>::iterator bpIt;
@@ -717,6 +727,8 @@ void GameController::executePrediker(Player & player)
 			player.add_gold(1);
 		}
 	}
+	sendMessageToClients("\r\ gold added", player.id);
+
 }
 void GameController::executeKoopman(Player & player) {
 	player.add_gold(1);
@@ -725,6 +737,8 @@ void GameController::executeKoopman(Player & player) {
 			player.add_gold(1);
 		}
 	}
+	sendMessageToClients("\r\ gold added", player.id);
+
 }
 void GameController::executeBouwmeester(Player & player)
 {
@@ -740,11 +754,23 @@ void GameController::executeBouwmeester(Player & player)
 	}
 	int counter2 = 0;
 	sendMessageToClients("\r\ buildingcards added", player.id);
-	while(counter2< 4) {
+	while(counter2< 3) {
 		for (auto& buildingCard : player.getBuildingCards()) {
-			sendMessageToClients("\r\ build building:"+ buildingCard.get_kind(), player.id);
+			sendMessageToClients("\r\ build building:"+ buildingCard.get_kind()+ "\r", player.id);
 		}
 		// make chose building card to build
+		sendMessageToClients("\r\ chose building to build \r", player.id);
+
+		const int answer = recieveAnswerFromPlayer(player.getBuildingCards().size());
+		int itCounter = 0;
+		for (auto& buildingCard : player.getBuildingCards()) {
+			if (answer == itCounter) {
+				player.buildBuildingCard(buildingCard);
+				sendMessageToClients("\r\ buildingcards added", player.id);
+				counter2++;
+			}
+			itCounter++;
+		}
 
 	}
 
