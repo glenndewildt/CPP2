@@ -42,8 +42,8 @@ void GameController::startGame()
 			auto &player = client->get_player();
 			socket.write("\r\n GameInfo:" + player.get_name());
 			socket.write("\r\n Gold:" + std::to_string(player.get_gold()));
-			socket.write("\r\n Building carts:" + std::to_string(player.getBuildingCards().size()));
-			socket.write("\r\n Charcater carts:" + std::to_string(player.getCharCards().size()));
+			socket.write("\r\n Building cards:" + std::to_string(player.getBuildingCards().size()));
+			socket.write("\r\n Character cards:" + std::to_string(player.getCharCards().size()));
 
 		}
 		
