@@ -297,16 +297,16 @@ void GameController::execPlayerTurn(Player &player, const CharacterCard charCard
 		if (!buildedbuilding)
 		{
 			countOptions++;
-			message.append(std::to_string(countOptions) + ": Use character power.\r\n");
+			message.append(std::to_string(countOptions) + ": Build building.\r\n");
 			indexBuild = countOptions;
 		}
 
 		countOptions++;
-		message.append(std::to_string(countOptions) + ": Use character power.\r\n");
+		message.append(std::to_string(countOptions) + ": Show Info.\r\n");
 		indexShowInfo = countOptions;
 
 		countOptions++;
-		message.append(std::to_string(countOptions) + ": Use character power.\r\n");
+		message.append(std::to_string(countOptions) + ": End turn.\r\n");
 		indexEndTurn = countOptions;
 
 		sendMessageToClients(message, player.id);
@@ -324,7 +324,16 @@ void GameController::execPlayerTurn(Player &player, const CharacterCard charCard
 		}
 		else if (answer == indexBuild)
 		{
-			// TODO:
+			if (buildBuilding(player) > 0) {
+				countBuilded++;
+				if (charCard.getType() == CharacterCard::CharType::Bouwmeester) {
+					sendMessageToClients("You can build up to 3 buildings because you have the Bouwmeester!\r\n", player.id);
+					if (countBuilded > 2) {
+						buildedbuilding = true;
+					}
+				}
+				else buildedbuilding = true;
+			}
 		}
 		else if (answer == indexShowInfo)
 		{
@@ -395,6 +404,59 @@ int GameController::calculateScore(Player& player)
 	if (player.getBuildings().size() >= 8) score += 2;
 
 	return score;
+}
+
+const int GameController::buildBuilding(Player& player)
+{
+	bool done{ false };
+	int builded{ 0 };
+
+	while (!done) {
+		sendMessageToClients("\r\nWhich building would you want to build\r\n", player.id);
+		sendMessageToClients("You currently have " + std::to_string(player.get_gold()) + " gold\r\n", player.id);
+	
+		std::string message{ "" };
+		std::vector<BuildingCard>::iterator it;
+
+		auto buildingCards = player.getBuildingCards();
+		for (it = buildingCards.begin(); it != buildingCards.end(); it++)
+		{
+			message.append(std::to_string(it - buildingCards.begin() + 1) + ": ");
+			message.append(it->get_kind() + " ");
+			message.append("color: " + it->get_color());
+			message.append(" ");
+			message.append("cost: " + it->get_cost());
+			message.append("\r\n");
+		}
+
+		message.append(std::to_string(buildingCards.size() + 1) + ": cancel.\r\n");
+
+		sendMessageToClients(message, player.id);
+
+		const int answer = recieveAnswerFromPlayer(buildingCards.size() + 1);
+		if (answer == 0) return 0;
+
+		if (answer == buildingCards.size() + 1) {
+			done = true;
+		}
+		else
+		{
+			if (player.get_gold() >= stoi(buildingCards[answer - 1].get_cost())) {
+				player.getBuildings().push_back(player.getBuildingCards()[answer - 1]);
+				sendMessageToClients("\r\n" + player.get_name() + " built the " + player.getBuildingCards()[answer - 1].get_kind() + "!\r\n", 3);
+				player.set_gold(player.get_gold() - stoi(player.getBuildings()[answer - 1].get_cost()));
+				player.getBuildingCards().erase(player.getBuildingCards().begin() + answer - 1);
+				builded++;
+				if (firstWinPlayerId == 0 && player.getBuildings().size() >= BuildingLimitToEndGame) firstWinPlayerId = player.id;
+				done = true;
+			}
+			else {
+				sendMessageToClients("\r\nYou don't have enough gold! you have: " + std::to_string(player.get_gold()), player.id);
+			}
+		}
+	}
+
+	return builded;
 }
 
 void GameController::useCard(Player& player, CharacterCard charCard)
