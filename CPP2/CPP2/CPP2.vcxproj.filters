@@ -119,5 +119,6 @@
     <None Include="karakterkaarten.csv">
       <Filter>Data</Filter>
     </None>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

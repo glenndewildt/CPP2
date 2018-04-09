@@ -178,6 +178,7 @@
   <ItemGroup>
     <None Include="..\..\..\..\..\Downloads\machiavelli\Makefile" />
     <None Include="Bouwkaarten.csv" />
+    <None Include="ClassDiagram.cd" />
     <None Include="karakterkaarten.csv" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
